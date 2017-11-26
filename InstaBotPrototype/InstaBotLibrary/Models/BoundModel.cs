@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace InstaBotPrototype.Models
+namespace InstaBotLibrary.Models
 {
     public class BoundModel
     {
