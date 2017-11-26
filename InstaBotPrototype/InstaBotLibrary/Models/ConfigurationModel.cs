@@ -1,4 +1,4 @@
-﻿namespace InstaBotPrototype.Models
+﻿namespace InstaBotLibrary.Models
 {
     public class ConfigurationModel
     {
