@@ -8,11 +8,10 @@ namespace InstaBotLibrary.Repositories
     interface IRepository
     {
         //READ
-        /// <summary>
-        /// check login and password
-        /// </summary>
-        /// <returns>returns user Id, or -1 if it doesn't exist</returns>
-        int verifyUser(AuthorizationModel user);
+
+
+
+        AuthorizationModel getUserAuthorizationInfo(string login);
         List<BoundModel> getAllBounds(int userId);
         List<FilterModel> getAllFilters(int filterId);
         UserModel getUserInfo(int userId);
