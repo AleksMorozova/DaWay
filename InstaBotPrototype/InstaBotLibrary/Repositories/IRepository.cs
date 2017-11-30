@@ -12,8 +12,8 @@ namespace InstaBotLibrary.Repositories
 
 
         AuthorizationModel getUserAuthorizationInfo(string login);
-        List<BoundModel> getAllBounds(int userId);
-        List<FilterModel> getAllFilters(int filterId);
+        List<BoundModel> getUserBounds(int userId);
+        List<FilterModel> getBoundFilters(int filterId);
         UserModel getUserInfo(int userId);
 
         //ADD
