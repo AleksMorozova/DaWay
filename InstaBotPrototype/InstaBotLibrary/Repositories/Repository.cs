@@ -42,30 +42,30 @@ namespace InstaBotLibrary.Repositories
             }
         }
 
-        public void DeleteBound(BoundModel bound)
+        public void DeleteBound(int boundId)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var sqlQuery = "DELETE FROM Users WHERE Id = @id";
-                db.Execute(sqlQuery, bound);
+                var sqlQuery = "DELETE FROM Users WHERE Id = @boundId";
+                db.Execute(sqlQuery,new { boundId });
             }
         }
 
-        public void DeleteFilter(FilterModel filter)
+        public void DeleteFilter(string filter)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var sqlQuery = "DELETE FROM Users WHERE Filter = @Filter";
-                db.Execute(sqlQuery, filter);
+                var sqlQuery = "DELETE FROM Users WHERE Filter = @filter";
+                db.Execute(sqlQuery, new { filter });
             }
         }
 
-        public void DeleteUser(UserModel user)
+        public void DeleteUser(int userId)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var sqlQuery = "DELETE FROM Users WHERE Id = @id";
-                db.Execute(sqlQuery, user);
+                var sqlQuery = "DELETE FROM Users WHERE Id = @userId";
+                db.Execute(sqlQuery, new { userId });
             }
         }
 
@@ -116,10 +116,6 @@ namespace InstaBotLibrary.Repositories
                 var sqlQuery = "UPDATE Bounds SET TelegramAccount = @TelegramAccount, InstagramAccount = @InstagramAccount, InstagramPassword = @InstagramPassword WHERE Id = @Id";
                 db.Execute(sqlQuery, bound);
             }
-        }
-
-        public void UpdateFilter(FilterModel filter)
-        {
         }
 
         public void UpdateUser(UserModel user)
