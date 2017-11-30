@@ -25,7 +25,6 @@ namespace InstaBotLibrary.Repositories
         //UPDATE
         void UpdateUser(UserModel user);
         void UpdateBound(BoundModel bound);
-        void UpdateFilter(FilterModel filter);
 
         //DELETE
         void DeleteUser(int userId);
