@@ -13,7 +13,7 @@ namespace InstaBotLibrary.Repositories
 
         AuthorizationModel getUserAuthorizationInfo(string login);
         List<BoundModel> getUserBounds(int userId);
-        List<FilterModel> getBoundFilters(int filterId);
+        List<FilterModel> getBoundFilters(int boundId);
         UserModel getUserInfo(int userId);
 
         //ADD
@@ -28,9 +28,9 @@ namespace InstaBotLibrary.Repositories
         void UpdateFilter(FilterModel filter);
 
         //DELETE
-        void DeleteUser(UserModel user);
-        void DeleteBound(BoundModel bound);
-        void DeleteFilter(FilterModel filter);
+        void DeleteUser(int userId);
+        void DeleteBound(int boundId);
+        void DeleteFilter(string filter);
 
     }
 }
