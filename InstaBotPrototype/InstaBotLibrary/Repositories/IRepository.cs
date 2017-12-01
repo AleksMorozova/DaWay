@@ -29,7 +29,7 @@ namespace InstaBotLibrary.Repositories
         //DELETE
         void DeleteUser(int userId);
         void DeleteBound(int boundId);
-        void DeleteFilter(string filter);
+        void DeleteFilter(FilterModel filter);
 
     }
 }

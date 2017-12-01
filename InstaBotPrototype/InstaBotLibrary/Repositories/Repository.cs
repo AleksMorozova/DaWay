@@ -51,12 +51,12 @@ namespace InstaBotLibrary.Repositories
             }
         }
 
-        public void DeleteFilter(string filter)
+        public void DeleteFilter(FilterModel filter)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var sqlQuery = "DELETE FROM Users WHERE Filter = @filter";
-                db.Execute(sqlQuery, new { filter });
+                var sqlQuery = "DELETE FROM Users WHERE BoundId = @BoundId AND Filter = @Filter";
+                db.Execute(sqlQuery, filter);
             }
         }
 
