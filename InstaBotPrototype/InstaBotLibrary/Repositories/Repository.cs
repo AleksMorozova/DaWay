@@ -5,12 +5,17 @@ using InstaBotLibrary.Models;
 using System.Data.SqlClient;
 using Dapper;
 using System.Data;
+using Microsoft.Extensions.Configuration;
 
 namespace InstaBotLibrary.Repositories
 {
     class Repository : IRepository
     {
-        string connectionString = "";
+        string connectionString = new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile("appsettings.json")
+            .Build()
+            .GetConnectionString("connectionString");
 
 
         public void AddBound(BoundModel bound)
