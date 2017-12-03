@@ -11,11 +11,20 @@ namespace InstaBotLibrary.Repositories
 {
     public class Repository : IRepository
     {
-        string connectionString = new ConfigurationBuilder()
-            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            .AddJsonFile("appsettings.json")
-            .Build()
-            .GetConnectionString("connectionString");
+        string connectionString;
+        public Repository()
+        {
+            connectionString = new ConfigurationBuilder()
+               .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+               .AddJsonFile("appsettings.json")
+               .Build()
+               .GetConnectionString("connectionString");
+        }
+
+        public Repository(string connectionString)
+        {
+            this.connectionString = connectionString;
+        }
 
 
         public void AddBound(BoundModel bound)
@@ -109,7 +118,7 @@ namespace InstaBotLibrary.Repositories
             UserModel user = null;
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                user = db.Query<UserModel>("SELECT * FROM Users WHERE Id = @id", new { userId }).FirstOrDefault();
+                user = db.Query<UserModel>("SELECT * FROM Users WHERE Id = @userId", new { userId }).FirstOrDefault();
             }
             return user;
         }
