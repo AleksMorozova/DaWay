@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace InstaBotLibrary.Repositories
 {
-    class Repository : IRepository
+    public class Repository : IRepository
     {
         string connectionString = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)

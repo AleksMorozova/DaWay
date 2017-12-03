@@ -5,12 +5,10 @@ using InstaBotLibrary.Models;
 
 namespace InstaBotLibrary.Repositories
 {
-    interface IRepository
+    public interface IRepository
     {
+
         //READ
-
-
-
         AuthorizationModel getUserAuthorizationInfo(string login);
         List<BoundModel> getUserBounds(int userId);
         List<FilterModel> getBoundFilters(int boundId);
