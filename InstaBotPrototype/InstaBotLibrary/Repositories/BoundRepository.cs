@@ -9,7 +9,7 @@ using System.Text;
 
 namespace InstaBotLibrary.Repositories
 {
-    class BoundRepository : Repository, IBoundRepository
+    public class BoundRepository : Repository, IBoundRepository
     {
         public BoundRepository() { }
         public BoundRepository(string str) : base(str) { }

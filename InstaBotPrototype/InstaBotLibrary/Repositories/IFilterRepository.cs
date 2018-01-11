@@ -5,7 +5,7 @@ using System.Text;
 
 namespace InstaBotLibrary.Repositories
 {
-    interface IFilterRepository
+    public interface IFilterRepository
     {
         List<FilterModel> getBoundFilters(int boundId);
         void AddFilter(FilterModel filter);

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace InstaBotLibrary.Repositories
 {
-    interface IBoundRepository
+    public interface IBoundRepository
     {
         List<BoundModel> getUserBounds(int userId);
         void AddBound(BoundModel bound);

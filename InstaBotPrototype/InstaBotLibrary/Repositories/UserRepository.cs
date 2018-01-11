@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 namespace InstaBotLibrary.Repositories
 {
-    class UserRepository : Repository, IUserRepository
+    public class UserRepository : Repository, IUserRepository
     {
         public UserRepository() { }
         public UserRepository(string str) : base(str) { }

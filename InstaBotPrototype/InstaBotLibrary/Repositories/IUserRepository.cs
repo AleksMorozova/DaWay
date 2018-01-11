@@ -5,7 +5,7 @@ using System.Text;
 
 namespace InstaBotLibrary.Repositories
 {
-    interface IUserRepository
+    public interface IUserRepository
     {
         AuthorizationModel getUserAuthorizationInfo(string login);
         UserModel getUserInfo(int userId);
