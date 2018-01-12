@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InstaBotPrototype.Controllers
+namespace InstaBotPrototype.UI.Controllers
 {
     [Route("/")]
     public class IndexController : Controller

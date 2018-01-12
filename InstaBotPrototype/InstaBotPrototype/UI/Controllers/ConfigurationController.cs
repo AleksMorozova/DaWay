@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using InstaBotLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InstaBotPrototype.Controllers
+namespace InstaBotPrototype.UI.Controllers
 {
     [Route("api/[controller]")]
     public class ConfigurationController : Controller
