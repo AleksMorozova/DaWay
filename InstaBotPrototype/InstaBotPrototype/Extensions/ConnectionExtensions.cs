@@ -17,11 +17,8 @@ namespace InstaBotPrototype.Extensions
                 ILogger<object> logger = services.GetRequiredService<ILogger<Object>>(); //getting logger
 
 
-                string connectionString = new ConfigurationBuilder()  //getting connectionString from appsettings.json
-                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                    .AddJsonFile("appsettings.json")
-                    .Build()
-                    .GetConnectionString("connectionString");
+                var configuration = services.GetService<IConfiguration>(); //getting connectionString from appsettings.json
+                var connectionString = configuration.GetConnectionString("connectionString"); 
 
 
                 using (SqlConnection conn = new SqlConnection(connectionString))  //creating connection
@@ -34,7 +31,7 @@ namespace InstaBotPrototype.Extensions
                         logger.LogInformation("Sucsessfully tested connection with connectionString: \"{ConnectionString}\"", conn);
                         //LOG SUCSESS
                     }
-                    catch (SqlException exception)//вывести сообщение об неуспешном подключении в логгер, с ошибкой
+                    catch (SqlException exception) //вывести сообщение об неуспешном подключении в логгер, с ошибкой
                     {
                         logger.LogInformation("Connection to database failed with error: \"{Message}\"", exception);
                         //LOG FAIL OF CONNECT TO DB
