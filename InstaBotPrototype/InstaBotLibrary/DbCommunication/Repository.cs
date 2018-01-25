@@ -6,7 +6,7 @@ using Dapper;
 using System.Data;
 using Microsoft.Extensions.Configuration;
 
-namespace InstaBotLibrary.Repository
+namespace InstaBotLibrary.DbCommunication
 {
     public abstract class Repository
     {
