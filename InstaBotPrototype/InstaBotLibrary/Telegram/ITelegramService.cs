@@ -1,4 +1,4 @@
-﻿namespace InstaBotPrototype.Services.Telegram
+﻿namespace InstaBotLibrary.Telegram
 {
     public interface ITelegramService
     {

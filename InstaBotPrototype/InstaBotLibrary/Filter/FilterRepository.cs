@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
-namespace InstaBotLibrary.Repositories
+namespace InstaBotLibrary.Filter
 {
     public class FilterRepository : Repository, IFilterRepository
     {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace InstaBotLibrary.Repositories
+namespace InstaBotLibrary.Bound
 {
     public interface IBoundRepository
     {

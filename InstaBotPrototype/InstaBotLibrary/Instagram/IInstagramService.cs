@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace InstaBotPrototype.Services.Instagram
+namespace InstaBotLibrary.Instagram
 {
     public interface IInstagramService
     {

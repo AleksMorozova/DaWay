@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace InstaBotLibrary.Models
+namespace InstaBotLibrary.Authoriztion
 {
     public class AuthorizationModel
     {
