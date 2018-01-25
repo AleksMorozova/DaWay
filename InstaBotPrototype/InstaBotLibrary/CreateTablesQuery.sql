@@ -12,8 +12,7 @@ CREATE TABLE Bounds
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
 	[UserId] INT NOT NULL,
 	[TelegramAccount] NVARCHAR(50) NOT NULL,
-	[InstagramAccount] NVARCHAR(50) NOT NULL,
-	[InstagramPassword] NVARCHAR(50) NOT NULL
+	[InstagramToken] NVARCHAR(50)
 );
 CREATE TABLE Filters
 (
