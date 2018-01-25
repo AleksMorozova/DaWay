@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using InstaBotLibrary.User;
-using InstaBotLibrary.Repository;
+using InstaBotLibrary.DbCommunication;
 using System;
 using System.Collections.Generic;
 using System.Data;
