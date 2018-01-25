@@ -1,5 +1,6 @@
 ﻿using Dapper;
-using InstaBotLibrary.Models;
+using InstaBotLibrary.Filter;
+using InstaBotLibrary.DbCommunication;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,7 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
-namespace InstaBotLibrary.Repositories
+namespace InstaBotLibrary.Filter
 {
     public class FilterRepository : Repository, IFilterRepository
     {

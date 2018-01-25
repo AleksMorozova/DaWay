@@ -1,9 +1,9 @@
-﻿using InstaBotLibrary.Models;
+﻿using InstaBotLibrary.Filter;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace InstaBotLibrary.Repositories
+namespace InstaBotLibrary.Filter
 {
     public interface IFilterRepository
     {

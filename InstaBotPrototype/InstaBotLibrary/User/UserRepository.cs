@@ -1,12 +1,14 @@
 ﻿using Dapper;
-using InstaBotLibrary.Models;
+using InstaBotLibrary.User;
+using InstaBotLibrary.DbCommunication;
+using InstaBotLibrary.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-namespace InstaBotLibrary.Repositories
+namespace InstaBotLibrary.User
 {
     public class UserRepository : Repository, IUserRepository
     {
