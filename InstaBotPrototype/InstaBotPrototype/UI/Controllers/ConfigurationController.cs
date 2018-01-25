@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using InstaBotLibrary.Models;
+using InstaBotLibrary.Configuration;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstaBotPrototype.UI.Controllers
