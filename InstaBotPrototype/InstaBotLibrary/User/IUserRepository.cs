@@ -1,4 +1,4 @@
-﻿using InstaBotLibrary.Models;
+﻿using InstaBotLibrary.User;
 using System;
 using System.Collections.Generic;
 using System.Text;

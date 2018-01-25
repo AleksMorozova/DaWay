@@ -1,5 +1,6 @@
 ﻿using Dapper;
-using InstaBotLibrary.Models;
+using InstaBotLibrary.Filter;
+using InstaBotLibrary.Repository;
 using System;
 using System.Collections.Generic;
 using System.Data;

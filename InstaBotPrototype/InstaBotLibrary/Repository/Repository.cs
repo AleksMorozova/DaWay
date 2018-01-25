@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using InstaBotLibrary.Models;
 using System.Data.SqlClient;
 using Dapper;
 using System.Data;
