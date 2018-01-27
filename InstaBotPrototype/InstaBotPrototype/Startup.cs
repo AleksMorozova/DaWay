@@ -26,6 +26,8 @@ namespace InstaBotPrototype
             services
             .AddMvc()
             .AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander()));
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,7 +37,7 @@ namespace InstaBotPrototype
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseSession();
             app.UseMvc();
         }
     }
