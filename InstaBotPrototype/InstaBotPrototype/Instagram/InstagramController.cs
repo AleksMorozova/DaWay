@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace InstaBotPrototype.Instagram
 {
-    [Route("api/[controller]/[action]")]
+    [Route("[controller]/[action]")]
     public class InstagramController : Controller
     {
         InstagramConfig config;
@@ -19,33 +19,23 @@ namespace InstaBotPrototype.Instagram
 
         public InstagramController(IConfiguration configuration)
         {
-            //HttpContext.Session
-            IConfigurationSection section = configuration.GetSection("InstagramAuth");
+            IConfigurationSection instagramAuthSection = configuration.GetSection("InstagramAuth");
 
-            var clientId = section["client_id"];
-            var clientSecret = section["client_secret"];
-            var redirectUri = section["redirect_uri"];
+            var clientId = instagramAuthSection["client_id"];
+            var clientSecret = instagramAuthSection["client_secret"];
+            var redirectUri = instagramAuthSection["redirect_uri"];
             var realtimeUri = "";
             config = new InstagramConfig(clientId, clientSecret, redirectUri, realtimeUri);
         }
 
 
-        [HttpGet]
-        public IActionResult Index()
-        {
-            //Users users = new Users(config, new OAuthResponse() { AccessToken = "asdas", User = new UserInfo() });
-            //users.RecentSelf();
-            return View();
-        }
 
         //Redirect to the link
-        //[HttpGet("{id}")]
         public RedirectResult Login()
         {
             var scopes = new List<OAuth.Scope>();
             scopes.Add(InstaSharp.OAuth.Scope.Basic);
-            //scopes.Add(InstaSharp.OAuth.Scope.Likes);
-            //scopes.Add(InstaSharp.OAuth.Scope.Comments);
+            scopes.Add(InstaSharp.OAuth.Scope.Public_Content);
 
             string link = InstaSharp.OAuth.AuthLink(config.OAuthUri + "authorize", config.ClientId, config.RedirectUri, scopes, InstaSharp.OAuth.ResponseType.Code);
 
@@ -64,8 +54,10 @@ namespace InstaBotPrototype.Instagram
             HttpContext.Session.SetString("InstaSharp.AuthInfo", oauthResponse.AccessToken);
 
             //return RedirectToAction("Index");
-            return Redirect("http://localhost:58687/api/instagram/MyFeed");
+            return Redirect("http://localhost:58687/instagram/MyFeed");
         }
+
+
         public async Task<ActionResult> MyFeed()
         {
             string token = HttpContext.Session.GetString("InstaSharp.AuthInfo");
@@ -78,8 +70,10 @@ namespace InstaBotPrototype.Instagram
             }
             
             var users = new Users(config, oAuthResponse);
-            UserResponse user = await users.GetSelf();
-            users.OAuthResponse.User.Id = user.Data.Id;
+            UserResponse userResponse = await users.GetSelf();
+
+            users.OAuthResponse.User = userResponse.Data;
+
             var feed = users.RecentSelf();
 
             //return View(feed.Data);
