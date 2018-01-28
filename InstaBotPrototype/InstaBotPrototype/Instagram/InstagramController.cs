@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
+﻿
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using InstaBotLibrary.Instagram;
-using InstaSharp.Endpoints;
-using InstaSharp.Models;
 using InstaSharp.Models.Responses;
-using InstaSharp;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
@@ -14,7 +11,6 @@ namespace InstaBotPrototype.Instagram
     [Route("[controller]/[action]")]
     public class InstagramController : Controller
     {
-        //InstagramConfig config;
         InstagramService instagramService;
 
         public InstagramController(IConfiguration configuration)
@@ -24,14 +20,11 @@ namespace InstaBotPrototype.Instagram
         }
 
 
-
-        //Redirect to the link
         public RedirectResult Login()
         {
             string link = instagramService.getLoginLink();
 
             return Redirect(link);
-
         }
 
         //Getting the access_token
