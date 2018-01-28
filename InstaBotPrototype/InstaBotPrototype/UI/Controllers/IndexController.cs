@@ -6,15 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstaBotPrototype.UI.Controllers
 {
-    [Route("/")]
+    [Route("/home")]
     public class IndexController : Controller
     {
         // GET api/values
         [HttpGet]
-        public ActionResult Index()
-        {
+         public ActionResult Index()
+         {
             return View();
-        }
+         }
 
     }
 }
