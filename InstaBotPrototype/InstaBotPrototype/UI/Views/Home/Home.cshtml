@@ -1,0 +1,72 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Private office</title>
+    <link rel="stylesheet" href="~/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+</head>
+<body>
+<div>
+    <div class="backgroundImage"></div>
+    <div class="exit">
+        <button class="btn btn-primary pull-right" id="btnExit">Exit</button>
+    </div>
+
+    <div class="headerHome col-sm-6 col-sm-offset-3">
+        <h1 class="text-center">Private office</h1>
+        <h3 class="col-sm-3">Hello, friend!</h3>
+        <a class="col-sm-4 pull-right"><h3>Edit personal info</h3></a>
+    </div>
+    <br />
+
+    <div class="col-sm-6 col-sm-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 >Bound</h4>
+            </div>
+
+            <div class="panel-body">
+                <form>
+                    <div class="form-group row">
+                        <label for="telegramName" class="col-sm-2 col-form-label">Telegram</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="telegramName" placeholder="Telegram">
+                            <small id="telegramHelp" class="form-text text-muted">Telegram username. For example, Ivan Ivanov</small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Instagram</label>
+                        <div class="col-sm-10">
+                            <a href="https://www.instagram.com/accounts/login/" target="_blank">Sign In</a>
+                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Instagram page</label>
+                        <div class="col-sm-10">
+                            <a href="https://www.instagram.com/" target="_blank">Your page</a>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Filters</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="5" id="filters"></textarea>
+                            <small id="filtersHelp" class="form-text text-muted">Write topics of interest to you. For example, cats, dogs</small>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <button id="btnSave" name="save" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
