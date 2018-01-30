@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaBotPrototype", "InstaBotPrototype\InstaBotPrototype.csproj", "{11FFC5F1-984D-440C-AA2D-9306FEE59D7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaBotLibrary", "InstaBotLibrary\InstaBotLibrary.csproj", "{33417DF4-E028-47B3-887B-12F59BD2ED44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaBotLibrary", "InstaBotLibrary\InstaBotLibrary.csproj", "{33417DF4-E028-47B3-887B-12F59BD2ED44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

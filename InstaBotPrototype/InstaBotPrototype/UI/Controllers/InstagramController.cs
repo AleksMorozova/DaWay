@@ -66,7 +66,8 @@ namespace InstaBotPrototype.Instagram
             MediasResponse feed = await instagramService.GetMedias(token);
 
             //return View(feed.Data);
-            return Json(feed);
+            return View();
+            //return Json(feed);
         }
     }
 }

@@ -1,0 +1,18 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Instagram-Telegram bot</title>
+</head>
+
+<body>
+    <h1>THIS IS THE BODY</h1>
+    <% foreach(BookStore.Models.Book b in ViewBag.Books) { %>
+    <br>Книга: <%: b.Name %>
+    <% } %>
+</body>
+
+</html>
