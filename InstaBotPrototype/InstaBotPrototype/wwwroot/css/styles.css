@@ -1,0 +1,181 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Titillium Web', sans-serif;
+}
+
+.backgroundImage {
+    position:absolute;
+    background-image: url(../images/background.jpg);
+    height: 100%;
+    width: 100%;
+    left:0;
+    top:0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index:-1;
+}
+
+.title {
+    width: 750px;
+    margin: auto;
+}
+
+.logo {
+    width: 802px;
+    height: 70px;
+    position: absolute;
+    background-color: lightseagreen;
+    border-radius: 5px;
+    display: flex;
+    color:white;
+}
+
+.info {
+    border: 1px solid lightseagreen;
+    border-radius: 5px;
+    position: absolute;
+    top: 70px;
+    width: 400px;
+    height: 400px;
+    background-color:azure;
+    font-size:18px;
+}
+
+.content {
+    padding:20px;
+}
+
+.login {
+    border: 1px solid lightseagreen;
+    border-radius: 5px;
+    position: absolute;
+    left: 400px;
+    top: 70px;
+    width: 400px;
+    height: 400px;
+    background-color: azure;
+}
+
+.block {
+    position:relative;
+    margin-top:5%;
+    left:25%;
+    width:50%;
+}
+
+.btn {
+    background-color: lightseagreen;
+    border: none;
+    color: white;
+    padding: 10px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    width:140px;
+}
+
+.btn:hover{
+    background-color:seagreen;
+}
+
+#loginForm {
+    width:400px;
+    text-align:center;
+}
+
+.login {
+    display: table;
+    height: 400px;
+    margin: 0 auto;
+}
+.loginContainer {
+    display:table-cell;
+    vertical-align:middle;
+    font-size:18px;
+}
+
+input {
+    border-radius: 5px;
+    border-color: lightgray;
+    height:25px;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+    border: 2px solid lightseagreen;
+    outline: none;
+}
+
+footer {
+    height: 40px;
+    background-color: lightseagreen;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    
+}
+
+label {
+    float: left;
+    width: 7em;
+    text-align: right;
+}
+
+.contentFooter {
+    display: inline-block;
+    margin-left: 15%;
+    margin-right: 15%;
+    text-align: center;
+    color: white;
+}
+
+.links {
+    padding: 7px;
+}
+
+.links a {
+    margin-left: 7px;
+    margin-right: 7px;
+    color: white;
+}
+
+a {
+   text-decoration:none;
+}
+
+footer a:hover {
+    box-shadow: 0px 0px 150px #000000;
+    z-index: 2;
+    transition: all 200ms ease-in;
+}
+
+textarea {
+    resize: none;
+}
+
+.panel-default {
+    border-color: lightseagreen;
+}
+
+.panel-default > .panel-heading {
+    background-color: lightseagreen;
+    border-color: lightseagreen;
+    border: 1px solid lightseagreen;
+    color: white;
+}
+
+.panel-body{
+    background-color:azure;
+}
+
+.exit {
+    margin-top: 3%;
+    margin-right: 5%;
+}
+
