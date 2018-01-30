@@ -18,7 +18,7 @@ namespace InstaBotPrototype.UI.Controllers
         public ActionResult Login(int? errortype)
         {
             string [] strarr = {"", "Incorrect login", "Incorrect password"};
-            ViewBag.message = strarr[errortype.GetValueOrDefault(0)];
+            ViewBag.message = TempData["message"];
             return View();
         }
 
@@ -31,13 +31,15 @@ namespace InstaBotPrototype.UI.Controllers
             auth = repo.getUserAuthorizationInfo(login);
             if (auth == null)
             {
-                return Redirect("/login/?errortype=1");
+                TempData["message"] = "Incorrect login";
+                return Redirect("/login");
             } 
             else
             {
                 if (auth.Password != password)
                 {
-                    return Redirect("/login/?errortype=2");
+                    TempData["message"] = "Incorrect password";
+                    return Redirect("/login");
                 }
                 else
                 {
