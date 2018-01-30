@@ -15,7 +15,7 @@ namespace InstaBotPrototype.UI.Controllers
         [HttpGet]
          public ActionResult Index()
          {
-            HttpContext.Session.SetInt32("user_id", 2);
+            //HttpContext.Session.SetInt32("user_id", 2);
             bool aval = HttpContext.Session.IsAvailable;
             int? id = HttpContext.Session.GetInt32("user_id");
             if (aval && id != null)

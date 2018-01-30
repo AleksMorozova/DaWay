@@ -42,7 +42,6 @@ namespace InstaBotPrototype.Instagram
             BoundModel bound = repo.getFirstOrCreateUserBound(userId);
             bound.InstagramToken = token;
             repo.SetInstagramToken(bound);
-            //HttpContext.Session.SetString("InstaSharp.AuthInfo", token);
 
             //return RedirectToAction("Index");
             return Redirect("http://localhost:58687/instagram/MyFeed");
@@ -51,7 +50,6 @@ namespace InstaBotPrototype.Instagram
 
         public async Task<ActionResult> MyFeed()
         {
-            //string token = HttpContext.Session.GetString("InstaSharp.AuthInfo");
             BoundRepository repo = new BoundRepository();
             int userId = HttpContext.Session.GetInt32("user_id").Value;
             BoundModel bound = repo.getFirstOrCreateUserBound(userId);
@@ -64,9 +62,7 @@ namespace InstaBotPrototype.Instagram
 
             MediasResponse feed = await instagramService.GetMedias(token);
 
-            //return View(feed.Data);
             return View(feed.Data);
-            //return Json(feed);
         }
     }
 }
