@@ -1,7 +1,7 @@
-﻿@{
+﻿@model List<InstaSharp.Models.Media>
+@{ 
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,9 +10,10 @@
 
 <body>
     <h1>THIS IS THE BODY</h1>
-    <% foreach(BookStore.Models.Book b in ViewBag.Books) { %>
-    <br>Книга: <%: b.Name %>
-    <% } %>
+@foreach (var media in Model)
+{
+   <img src="@media.Images.StandardResolution.Url" >
+}
 </body>
 
 </html>

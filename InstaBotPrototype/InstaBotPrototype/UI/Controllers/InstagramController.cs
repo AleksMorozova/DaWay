@@ -42,7 +42,6 @@ namespace InstaBotPrototype.Instagram
             BoundModel bound = repo.getFirstOrCreateUserBound(userId);
             bound.InstagramToken = token;
             repo.SetInstagramToken(bound);
-            //repo.UpdateBound(bound);
             //HttpContext.Session.SetString("InstaSharp.AuthInfo", token);
 
             //return RedirectToAction("Index");
@@ -66,7 +65,7 @@ namespace InstaBotPrototype.Instagram
             MediasResponse feed = await instagramService.GetMedias(token);
 
             //return View(feed.Data);
-            return View();
+            return View(feed.Data);
             //return Json(feed);
         }
     }
