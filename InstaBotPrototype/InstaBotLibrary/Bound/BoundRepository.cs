@@ -54,7 +54,23 @@ namespace InstaBotLibrary.Bound
             }
             return bounds;
         }
-
+        public BoundModel getFirstOrCreateUserBound(int userId)
+        {
+            BoundModel bound = null;
+            using (IDbConnection db = GetConnection())
+            {
+                bound = db.Query<BoundModel>("SELECT * FROM Bounds WHERE UserId = @userId", new { userId }).FirstOrDefault();
+            }
+            if (bound == null)
+            {
+                bound = new BoundModel();
+                bound.UserId = userId;
+                bound.TelegramAccount = "";
+                AddBound(bound);
+                //return getFirstOrCreateUserBound(userId);
+            }
+            return bound;
+        }
         public void UpdateBound(BoundModel bound)
         {
             using (IDbConnection db = GetConnection())

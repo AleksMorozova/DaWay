@@ -9,10 +9,11 @@ using InstaBotLibrary.Authorization;
 
 namespace InstaBotPrototype.UI.Controllers
 {
-    [Route("/")]
+    [Route("login/[action]")]
     public class LoginController : Controller
     {
         // GET: Login
+        [Route("/login")]
         [HttpGet]
         public ActionResult Login(int? errortype)
         {
@@ -21,24 +22,26 @@ namespace InstaBotPrototype.UI.Controllers
             return View();
         }
 
+
         [HttpPost]
-        public ActionResult Login(string login, string password)
+        public ActionResult Authorize(string login, string password)
         {
             UserRepository repo = new UserRepository();
             AuthorizationModel auth = new AuthorizationModel();
             auth = repo.getUserAuthorizationInfo(login);
             if (auth == null)
             {
-                return Redirect("/?errortype=1");
+                return Redirect("/login/?errortype=1");
             } 
             else
             {
                 if (auth.Password != password)
                 {
-                    return Redirect("/?errortype=2");
+                    return Redirect("/login/?errortype=2");
                 }
                 else
                 {
+                    HttpContext.Session.SetInt32("user_id", auth.Id);
                     return Redirect("/home");
                 }
             }
