@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-
-
+using InstaBotLibrary.User;
+using InstaBotLibrary.Bound;
+using InstaBotLibrary.Filter;
 
 namespace InstaBotPrototype.UI.Controllers
 {
@@ -27,11 +28,28 @@ namespace InstaBotPrototype.UI.Controllers
             return Redirect("/login");
          }
 		 
+
+
         [Route("/home")]
         public IActionResult Home()
         {
+            int id = HttpContext.Session.GetInt32("user_id").Value;
+            UserRepository userRepository = new UserRepository();
+            UserModel user = userRepository.getUserInfo(id);
+            BoundRepository boundRepository = new BoundRepository();
+            BoundModel bound = boundRepository.getFirstOrCreateUserBound(id);
+            List<FilterModel> filters = (new FilterRepository()).getBoundFilters(bound.Id);
+            ViewBag.bound = bound;
+            ViewBag.user = user;
+            ViewBag.filters = filters;
+
+
             return View();
         }
+
+
+
+
         [Route("/exit")]
         public IActionResult Exit()
         {
