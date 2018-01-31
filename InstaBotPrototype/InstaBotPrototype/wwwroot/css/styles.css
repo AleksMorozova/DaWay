@@ -1,4 +1,4 @@
-﻿* {
+* {
     margin: 0;
     padding: 0;
 }
@@ -17,6 +17,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    z-index:-1;
 }
 
 .title {
@@ -80,6 +81,10 @@ body {
     width:140px;
 }
 
+.btn:hover{
+    background-color:seagreen;
+}
+
 #loginForm {
     width:400px;
     text-align:center;
@@ -97,9 +102,9 @@ body {
 }
 
 input {
-    border-radius: 7px;
+    border-radius: 5px;
     border-color: lightgray;
-    height:20px;
+    height:25px;
 }
 
 input[type=text]:focus, input[type=password]:focus {
@@ -129,19 +134,48 @@ label {
     text-align: center;
     color: white;
 }
+
 .links {
     padding: 7px;
 }
+
 .links a {
     margin-left: 7px;
     margin-right: 7px;
     color: white;
 }
+
 a {
    text-decoration:none;
 }
-a:hover {
-   box-shadow: 0px 0px 150px #000000;
-   z-index: 2;
-   transition: all 200ms ease-in;
+
+footer a:hover {
+    box-shadow: 0px 0px 150px #000000;
+    z-index: 2;
+    transition: all 200ms ease-in;
 }
+
+textarea {
+    resize: none;
+}
+
+.panel-default {
+    border-color: lightseagreen;
+}
+
+.panel-default > .panel-heading {
+    background-color: lightseagreen;
+    border-color: lightseagreen;
+    border: 1px solid lightseagreen;
+    color: white;
+}
+
+.panel-body{
+    background-color:azure;
+}
+
+.exit {
+    margin-top: 3%;
+    margin-right: 5%;
+}
+

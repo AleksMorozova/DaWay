@@ -6,12 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 
 
+// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 namespace InstaBotPrototype.UI.Controllers
 {
-    [Route("/")]
-    public class IndexController : Controller
+    [Route("/home")]
+    public class HomeController : Controller
     {
-        // GET api/values
         [HttpGet]
          public ActionResult Index()
          {
@@ -24,6 +25,10 @@ namespace InstaBotPrototype.UI.Controllers
             }
             return Redirect("/login");
          }
-
+		 
+        public IActionResult Home()
+        {
+            return View();
+        }
     }
 }
