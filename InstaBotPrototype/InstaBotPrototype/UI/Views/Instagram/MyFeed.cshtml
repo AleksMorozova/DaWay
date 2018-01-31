@@ -6,14 +6,25 @@
 <html>
 <head>
     <title>Instagram-Telegram bot</title>
+    <style>
+        ul, li {
+            list-style: none;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>FEED</h1>
-@foreach (var media in Model)
-{
-   <img src="@media.Images.StandardResolution.Url" >
-}
+    <div align="center">
+        <h1>MY FEED</h1>
+        <ul>
+            @foreach (var media in Model)
+            {
+            <li><img src="@media.Images.StandardResolution.Url"></li>
+            }
+        </ul>
+
+    </div>
 </body>
 
 </html>

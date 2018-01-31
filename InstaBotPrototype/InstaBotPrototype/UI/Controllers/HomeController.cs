@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace InstaBotPrototype.UI.Controllers
 {
-    [Route("/home")]
+    [Route("/")]
     public class HomeController : Controller
     {
+        [Route("/")]
         [HttpGet]
          public ActionResult Index()
          {
@@ -21,14 +21,22 @@ namespace InstaBotPrototype.UI.Controllers
             int? id = HttpContext.Session.GetInt32("user_id");
             if (aval && id != null)
             {
-                return Content("User id is " + HttpContext.Session.GetInt32("user_id"));
+                //return Content("User id is " + HttpContext.Session.GetInt32("user_id"));
+                return Redirect("/home");
             }
             return Redirect("/login");
          }
 		 
+        [Route("/home")]
         public IActionResult Home()
         {
             return View();
+        }
+        [Route("/exit")]
+        public IActionResult Exit()
+        {
+            HttpContext.Session.Clear();
+            return Redirect("/");
         }
     }
 }
