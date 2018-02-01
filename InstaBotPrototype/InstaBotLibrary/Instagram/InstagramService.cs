@@ -46,17 +46,32 @@ namespace InstaBotLibrary.Instagram
         }
         public async Task<MediasResponse> GetMedias(string token)
         {
+            var oAuthResponse = await GetOAuthResponse(token);
+            var users = new Users(instagramConfig, oAuthResponse);
+            MediasResponse feed = await users.RecentSelf();
+
+
+            return feed;
+        }
+
+        private async Task<OAuthResponse> GetOAuthResponse(string token)
+        {
             var oAuthResponse = new OAuthResponse() { AccessToken = token, User = new UserInfo() };
             var users = new Users(instagramConfig, oAuthResponse);
             UserResponse userResponse = await users.GetSelf();
 
             users.OAuthResponse.User = userResponse.Data;
-
-            MediasResponse feed = await users.RecentSelf();
-            return feed;
+            return users.OAuthResponse;
         }
 
 
+        public async Task<List<InstaSharp.Models.User>> GetFriendsList(string token)
+        {
+            var oAuthResponse = await GetOAuthResponse(token);
+            Relationships relationships = new Relationships(instagramConfig, oAuthResponse);
+            var follows = await relationships.FollowsAll();
+            return follows;
+        }
 
 
 
