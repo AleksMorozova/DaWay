@@ -32,6 +32,7 @@ namespace InstaBotLibrary.Instagram
             var scopes = new List<OAuth.Scope>();
             scopes.Add(OAuth.Scope.Basic);
             scopes.Add(OAuth.Scope.Public_Content);
+            scopes.Add(OAuth.Scope.Follower_List);
 
             string link = OAuth.AuthLink(instagramConfig.OAuthUri + "authorize", instagramConfig.ClientId, instagramConfig.RedirectUri, scopes, InstaSharp.OAuth.ResponseType.Code);
             return link;

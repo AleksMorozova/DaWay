@@ -48,6 +48,25 @@ namespace InstaBotPrototype.Instagram
         }
 
 
+        public async Task<ActionResult> MyFriends()
+        {
+            BoundRepository repo = new BoundRepository();
+            int userId = HttpContext.Session.GetInt32("user_id").Value;
+            BoundModel bound = repo.getFirstOrCreateUserBound(userId);
+            string token = bound.InstagramToken;
+
+            if (token == null)
+            {
+                return Redirect("/login");
+            }
+
+            var feed = await instagramService.GetFollowsList(token);
+
+            return View(feed);
+        }
+
+
+
         public async Task<ActionResult> MyFeed()
         {
             BoundRepository repo = new BoundRepository();
