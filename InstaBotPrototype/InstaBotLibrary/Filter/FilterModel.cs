@@ -7,6 +7,7 @@ namespace InstaBotLibrary.Filter
 {
     public class FilterModel
     {
+        public int Id { get; set; }
         public int BoundId { get; set; }
         public string Filter { get; set; }
     }

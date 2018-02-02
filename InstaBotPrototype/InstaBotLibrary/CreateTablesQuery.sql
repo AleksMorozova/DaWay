@@ -11,7 +11,7 @@ CREATE TABLE Bounds
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
 	[UserId] INT NOT NULL,
-	[TelegramAccount] NVARCHAR(50),
+	[TelegramAccount] NVARCHAR(80),
 	[InstagramToken] NVARCHAR(80),
 	[InstagramId] INT,
 	[InstagramUsername] NVARCHAR(80),
@@ -27,6 +27,6 @@ CREATE TABLE Subscribtions
 (
     [Id] INT NOT NULL PRIMARY KEY IDENTITY,
 	[BoundId] INT NOT NULL,
-	[UserName] NVARCHAR(20) NOT NULL,
+	[UserName] NVARCHAR(80) NOT NULL,
 	[UserId] INT NOT NULL
 );

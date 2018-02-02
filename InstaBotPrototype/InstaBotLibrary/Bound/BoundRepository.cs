@@ -20,7 +20,7 @@ namespace InstaBotLibrary.Bound
         {
             using (IDbConnection db = GetConnection())
             {
-                var sqlQuery = "INSERT INTO Bounds (UserId, TelegramAccount, InstagramToken) VALUES(@UserId, @TelegramAccount, @InstagramToken); SELECT CAST(SCOPE_IDENTITY() as int)";
+                var sqlQuery = "INSERT INTO Bounds (UserId, TelegramAccount, InstagramToken, InstagramId, InstagramUsername) VALUES(@UserId, @TelegramAccount, @InstagramToken, @InstagramId, @InstagramUsername); SELECT CAST(SCOPE_IDENTITY() as int)";
                 int boundId = db.Query<int>(sqlQuery, bound).FirstOrDefault();
                 bound.Id = boundId;
             }
@@ -34,6 +34,14 @@ namespace InstaBotLibrary.Bound
             }
         }
 
+        public void SetInstagramInfo(BoundModel bound)
+        {
+            using (IDbConnection db = GetConnection())
+            {
+                var sqlQuery = "UPDATE Bounds SET InstagramToken = @InstagramToken, InstagramId = @InstagramId, InstagramUsername = @InstagramUsername WHERE Id = @Id";
+                db.Execute(sqlQuery, bound);
+            }
+        }
 
         public void DeleteBound(int boundId)
         {
@@ -59,7 +67,7 @@ namespace InstaBotLibrary.Bound
         {
             using (IDbConnection db = GetConnection())
             {
-                var sqlQuery = "UPDATE Bounds SET TelegramAccount = @TelegramAccount, InstagramToken = @InstagramToken WHERE Id = @Id";
+                var sqlQuery = "UPDATE Bounds SET TelegramAccount = @TelegramAccount, InstagramToken = @InstagramToken, InstagramId = @InstagramId, InstagramUsername = @InstagramUsername WHERE Id = @Id";
                 db.Execute(sqlQuery, bound);
             }
         }
