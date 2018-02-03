@@ -1,8 +1,6 @@
-﻿
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using InstaBotLibrary.Instagram;
-using InstaSharp.Models.Responses;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
@@ -16,7 +14,6 @@ namespace InstaBotPrototype.Instagram
         public InstagramController(IConfiguration configuration)
         {
             instagramService = new InstagramService(configuration);
-            
         }
 
 
@@ -35,22 +32,7 @@ namespace InstaBotPrototype.Instagram
             HttpContext.Session.SetString("InstaSharp.AuthInfo", token);
 
             //return RedirectToAction("Index");
-            return Redirect("http://localhost:58687/instagram/MyFeed");
-        }
-
-
-        public async Task<ActionResult> MyFeed()
-        {
-            string token = HttpContext.Session.GetString("InstaSharp.AuthInfo");
-            if (token == null)
-            {
-                return RedirectToAction("Login");
-            }
-
-            MediasResponse feed = await instagramService.GetMedias(token);
-
-            //return View(feed.Data);
-            return Json(feed);
+            return Redirect("http://localhost:58687/");
         }
     }
 }

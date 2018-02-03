@@ -11,6 +11,7 @@ namespace InstaBotLibrary.Instagram
     public class InstagramService
     {
         private InstagramConfig instagramConfig;
+        private OAuthResponse auth = null;
         public InstagramService(InstagramConfig config)
         {
             instagramConfig = config;
@@ -26,6 +27,20 @@ namespace InstaBotLibrary.Instagram
             instagramConfig = new InstagramConfig(clientId, clientSecret, redirectUri, realtimeUri);
         }
 
+        private void AssertIsAuthenticated()
+        {
+            if (auth == null)
+                throw new InstagramUnauthorizedException();
+        }
+
+        public void Auth(OAuthResponse oauth)
+        {
+            auth = oauth;
+        }
+        public void Auth(string token, int Id)
+        {
+            Auth(new OAuthResponse() { AccessToken = token, User = new UserInfo() { Id = Id } });
+        }
 
         public string getLoginLink()
         {
@@ -34,7 +49,7 @@ namespace InstaBotLibrary.Instagram
             scopes.Add(OAuth.Scope.Public_Content);
             scopes.Add(OAuth.Scope.Follower_List);
 
-            string link = OAuth.AuthLink(instagramConfig.OAuthUri + "authorize", instagramConfig.ClientId, instagramConfig.RedirectUri, scopes, InstaSharp.OAuth.ResponseType.Code);
+            string link = OAuth.AuthLink(instagramConfig.OAuthUri + "authorize", instagramConfig.ClientId, instagramConfig.RedirectUri, scopes, OAuth.ResponseType.Code);
             return link;
         }
 
@@ -45,45 +60,44 @@ namespace InstaBotLibrary.Instagram
             var oauthResponse = await auth.RequestToken(code);
             return oauthResponse.AccessToken;
         }
-        public async Task<MediasResponse> GetMedias(string token)
+
+
+        public async Task<MediasResponse> GetMedias()
         {
-            var oAuthResponse = await GetOAuthResponse(token);
-            var users = new Users(instagramConfig, oAuthResponse);
+            AssertIsAuthenticated();
+            var users = new Users(instagramConfig, auth);
             MediasResponse feed = await users.RecentSelf();
             return feed;
         }
-
-        private async Task<OAuthResponse> GetOAuthResponse(string token)
+        public async Task<UserResponse> GerUserInfo()
         {
-            var oAuthResponse = new OAuthResponse() { AccessToken = token, User = new UserInfo() };
-            var users = new Users(instagramConfig, oAuthResponse);
-            UserResponse userResponse = await users.GetSelf();
-
-            users.OAuthResponse.User = userResponse.Data;
-            return users.OAuthResponse;
+            AssertIsAuthenticated();
+            var users = new Users(instagramConfig, auth);
+            return await users.GetSelf();
         }
 
 
-        public async Task<List<InstaSharp.Models.User>> GetFollowsList(string token)
+        public async Task<List<InstaSharp.Models.User>> GetFollowsList()
         {
-            var oAuthResponse = await GetOAuthResponse(token);
-            Relationships relationships = new Relationships(instagramConfig, oAuthResponse);
+            AssertIsAuthenticated();
+            Relationships relationships = new Relationships(instagramConfig, auth);
             var follows = await relationships.FollowsAll();
             return follows;
         }
         /// <summary>
         /// returns all your follow's media
         /// </summary>
-        public async Task<List<InstaSharp.Models.Media>> GetFollowsMedia(string token)
+        public async Task<List<InstaSharp.Models.Media>> GetFollowsMedia()
         {
-            var follows = await GetFollowsList(token);
-            return await GetFollowsMedia(token, follows);
+            AssertIsAuthenticated();
+            var follows = await GetFollowsList();
+            return await GetFollowsMedia(follows);
         }
 
-        public async Task<List<InstaSharp.Models.Media>> GetFollowsMedia(string token, IEnumerable<InstaSharp.Models.User> subscriptions)
+        public async Task<List<InstaSharp.Models.Media>> GetFollowsMedia(IEnumerable<InstaSharp.Models.User> subscriptions)
         {
-            OAuthResponse oAuthResponse = await GetOAuthResponse(token);
-            var users = new Users(instagramConfig, oAuthResponse);
+            AssertIsAuthenticated();
+            var users = new Users(instagramConfig, auth);
             List<InstaSharp.Models.Media> medias = new List<InstaSharp.Models.Media>();
             foreach (var user in subscriptions)
             {
@@ -93,10 +107,10 @@ namespace InstaBotLibrary.Instagram
             return medias;
         }
 
-        public async Task<List<InstaSharp.Models.Media>> GetFollowsMedia(string token, IEnumerable<long> subscriptions)
+        public async Task<List<InstaSharp.Models.Media>> GetFollowsMedia(IEnumerable<long> subscriptions)
         {
-            OAuthResponse oAuthResponse = await GetOAuthResponse(token);
-            var users = new Users(instagramConfig, oAuthResponse);
+            AssertIsAuthenticated();
+            var users = new Users(instagramConfig, auth);
             List<InstaSharp.Models.Media> medias = new List<InstaSharp.Models.Media>();
             foreach (var userId in subscriptions)
             {
