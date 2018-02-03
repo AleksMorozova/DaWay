@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using InstaBotLibrary.Instagram;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace InstaBotPrototype.Instagram
 {
@@ -29,9 +28,8 @@ namespace InstaBotPrototype.Instagram
         {
             string token = await instagramService.GetToken(code);
 
-            HttpContext.Session.SetString("InstaSharp.AuthInfo", token);
+            //HERE WE GET AND CAN SAVE TOKEN
 
-            //return RedirectToAction("Index");
             return Redirect("http://localhost:58687/");
         }
     }
