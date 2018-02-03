@@ -1,0 +1,30 @@
+﻿@model List<InstaSharp.Models.Media>
+@{ 
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Instagram-Telegram bot</title>
+    <style>
+        ul, li {
+            list-style: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div align="center">
+        <h1>MY FEED</h1>
+        <ul>
+            @foreach (var media in Model)
+            {
+            <li><img src="@media.Images.StandardResolution.Url"></li>
+            }
+        </ul>
+
+    </div>
+</body>
+
+</html>
