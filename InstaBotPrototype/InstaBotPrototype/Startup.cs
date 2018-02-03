@@ -35,6 +35,7 @@ namespace InstaBotPrototype
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseMvc();
         }
     }
