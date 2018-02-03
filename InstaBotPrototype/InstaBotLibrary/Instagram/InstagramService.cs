@@ -71,14 +71,16 @@ namespace InstaBotLibrary.Instagram
             var follows = await relationships.FollowsAll();
             return follows;
         }
-
+        /// <summary>
+        /// returns all your follow's media
+        /// </summary>
         public async Task<List<InstaSharp.Models.Media>> GetFollowsMedia(string token)
         {
             var follows = await GetFollowsList(token);
             return await GetFollowsMedia(token, follows);
         }
 
-        public async Task<List<InstaSharp.Models.Media>> GetFollowsMedia(string token, List<InstaSharp.Models.User> subscriptions)
+        public async Task<List<InstaSharp.Models.Media>> GetFollowsMedia(string token, IEnumerable<InstaSharp.Models.User> subscriptions)
         {
             OAuthResponse oAuthResponse = await GetOAuthResponse(token);
             var users = new Users(instagramConfig, oAuthResponse);
@@ -86,6 +88,19 @@ namespace InstaBotLibrary.Instagram
             foreach (var user in subscriptions)
             {
                 var feed = await users.Recent(user.Id);
+                medias.AddRange(feed.Data);
+            }
+            return medias;
+        }
+
+        public async Task<List<InstaSharp.Models.Media>> GetFollowsMedia(string token, IEnumerable<long> subscriptions)
+        {
+            OAuthResponse oAuthResponse = await GetOAuthResponse(token);
+            var users = new Users(instagramConfig, oAuthResponse);
+            List<InstaSharp.Models.Media> medias = new List<InstaSharp.Models.Media>();
+            foreach (var userId in subscriptions)
+            {
+                var feed = await users.Recent(userId);
                 medias.AddRange(feed.Data);
             }
             return medias;
