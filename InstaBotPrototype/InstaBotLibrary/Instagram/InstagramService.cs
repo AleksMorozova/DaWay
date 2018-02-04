@@ -1,4 +1,6 @@
 ﻿using InstaSharp.Endpoints;
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using InstaSharp;
@@ -8,7 +10,7 @@ using InstaSharp.Models;
 
 namespace InstaBotLibrary.Instagram
 {
-    public class InstagramService
+    public class InstagramService : IInstagramService
     {
         private InstagramConfig instagramConfig;
         private OAuthResponse auth = null;
@@ -118,6 +120,12 @@ namespace InstaBotLibrary.Instagram
                 medias.AddRange(feed.Data);
             }
             return medias;
+        }
+
+        public async Task<IEnumerable<string>> GetLatestPosts()
+        {
+            List<InstaSharp.Models.Media> lst = await GetFollowsMedia();
+            return Array.ConvertAll(lst.ToArray(), (post) => post.Images.StandardResolution.Url);
         }
     }
 }
