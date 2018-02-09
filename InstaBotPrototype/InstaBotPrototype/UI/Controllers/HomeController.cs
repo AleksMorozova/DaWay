@@ -51,10 +51,11 @@ namespace InstaBotPrototype.UI.Controllers
 
 
         [Route("/exit")]
-        public IActionResult Exit()
+        public async Task<IActionResult> Logout()
         {
             HttpContext.Session.Clear();
-            return Redirect("/");
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectPermanent("/login");
         }
     }
 }
