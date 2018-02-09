@@ -26,7 +26,7 @@ namespace InstaBotPrototype
         {
             // Add framework services.
             services.Configure<InstagramConfig>(Configuration.GetSection("InstagramSettings"));
-            services.AddTransient<InstagramService>();
+            services.AddTransient<IInstagramService, InstagramService>();
             services
             .AddMvc()
             .AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander()));

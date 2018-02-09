@@ -8,9 +8,9 @@ namespace InstaBotPrototype.Instagram
     [Route("[controller]/[action]")]
     public class InstagramController : Controller
     {
-        private InstagramService instagramService;
+        private IInstagramService instagramService;
 
-        public InstagramController(InstagramService service)
+        public InstagramController(IInstagramService service)
         {
             instagramService = service;
         }
