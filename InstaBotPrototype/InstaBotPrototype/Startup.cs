@@ -30,6 +30,17 @@ namespace InstaBotPrototype
             services
             .AddMvc()
             .AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander()));
+
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            
+             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options => 
+            {
+                options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/login");
+            });
+
+            services.AddTransient<IUserManager, UserManager>();
         }
 
        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +53,7 @@ namespace InstaBotPrototype
 
             app.UseStaticFiles();
             app.UseMvc();
+            app.UseAuthentication();
         }
     }
 }
