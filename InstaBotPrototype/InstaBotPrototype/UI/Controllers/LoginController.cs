@@ -17,37 +17,40 @@ namespace InstaBotPrototype.UI.Controllers
         [HttpGet]
         public ActionResult Login(int? errortype)
         {
-            string [] strarr = {"", "Incorrect login", "Incorrect password"};
             ViewBag.message = TempData["message"];
             return View();
         }
 
 
+        [Route("/auth")]
         [HttpPost]
-        public ActionResult Authorize(string login, string password)
+        public async Task<ActionResult> AuthAsync(string login, string password)
         {
-            UserRepository repo = new UserRepository();
-            AuthorizationModel auth = new AuthorizationModel();
-            auth = repo.getUserAuthorizationInfo(login);
-            if (auth == null)
+            UserManager userManager = new UserManager();
+
+            if (ModelState.IsValid && userManager.IsLoggedIn(login, password))
             {
-                TempData["message"] = "Incorrect login";
-                return Redirect("/login");
-            } 
+                HttpContext.Session.SetInt32("user_id", userManager.SessionId(login));
+                await Authenticate(login);
+                return RedirectPermanent("/home");
+            }
             else
             {
-                if (auth.Password != password)
-                {
-                    TempData["message"] = "Incorrect password";
-                    return Redirect("/login");
-                }
-                else
-                {
-                    HttpContext.Session.SetInt32("user_id", auth.Id);
-                    return Redirect("/home");
-                }
+                TempData["message"] = "Incorrect login or password";
+                return RedirectPermanent("/login");
             }
         }
+
+        private async Task Authenticate(string userName)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+            };
+            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+        }
+        
 
     }
 }
