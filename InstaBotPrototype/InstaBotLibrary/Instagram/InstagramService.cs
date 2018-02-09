@@ -1,12 +1,11 @@
 ﻿using InstaSharp.Endpoints;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using InstaSharp;
 using InstaSharp.Models.Responses;
-using Microsoft.Extensions.Configuration;
 using InstaSharp.Models;
+using Microsoft.Extensions.Options;
 
 namespace InstaBotLibrary.Instagram
 {
@@ -14,19 +13,10 @@ namespace InstaBotLibrary.Instagram
     {
         private InstagramConfig instagramConfig;
         private OAuthResponse auth = null;
-        public InstagramService(InstagramConfig config)
-        {
-            instagramConfig = config;
-        }
-        public InstagramService(IConfiguration configuration)
-        {
-            IConfigurationSection instagramAuthSection = configuration.GetSection("InstagramAuth");
 
-            var clientId = instagramAuthSection["client_id"];
-            var clientSecret = instagramAuthSection["client_secret"];
-            var redirectUri = instagramAuthSection["redirect_uri"];
-            var realtimeUri = "";
-            instagramConfig = new InstagramConfig(clientId, clientSecret, redirectUri, realtimeUri);
+        public InstagramService(IOptions<InstagramConfig> config)
+        {
+            instagramConfig = config.Value;
         }
 
         private void AssertIsAuthenticated()

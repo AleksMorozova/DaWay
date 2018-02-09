@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using InstaSharp;
+using InstaBotLibrary.Instagram;
 
 namespace InstaBotPrototype
 {
@@ -23,6 +25,8 @@ namespace InstaBotPrototype
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
+            services.Configure<InstagramConfig>(Configuration.GetSection("InstagramSettings"));
+            services.AddTransient<InstagramService>();
             services
             .AddMvc()
             .AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander()));
