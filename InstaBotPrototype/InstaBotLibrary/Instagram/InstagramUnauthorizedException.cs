@@ -6,7 +6,7 @@ namespace InstaBotLibrary.Instagram
 {
     class InstagramUnauthorizedException : InvalidOperationException
     {
-        public InstagramUnauthorizedException() : base("Instagram wasn't auntificated, please use Auth method before")
+        public InstagramUnauthorizedException() : base("Instagram wasn't authentificated, please use Auth method before")
         {
             
         }
