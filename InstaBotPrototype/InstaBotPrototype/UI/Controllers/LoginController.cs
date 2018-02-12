@@ -17,14 +17,18 @@ namespace InstaBotPrototype.UI.Controllers
             ViewBag.message = TempData["message"];
             return View();
         }
+        
+        private IUserManager userManager;
 
+        public LoginController(IUserManager manager)
+        {
+            userManager = manager;
+        }
 
         [Route("/auth")]
         [HttpPost]
         public async Task<ActionResult> AuthAsync(string login, string password)
         {
-            UserManager userManager = new UserManager();
-
             if (ModelState.IsValid && userManager.IsLoggedIn(login, password))
             {
                 HttpContext.Session.SetInt32("user_id", userManager.SessionId(login));
