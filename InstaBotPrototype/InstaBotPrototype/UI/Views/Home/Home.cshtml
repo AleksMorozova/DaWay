@@ -16,12 +16,12 @@
 <div>
     <div class="backgroundImage"></div>
     <div class="exit">
-        <button class="btn btn-primary pull-right" id="btnExit">Exit</button>
+        <button class="btn btn-primary pull-right" onclick="window.location.href = '/exit';" id="btnExit">Exit</button>
     </div>
 
     <div class="headerHome col-sm-6 col-sm-offset-3">
         <h1 class="text-center">Private office</h1>
-        <h3 class="col-sm-3">Hello, friend!</h3>
+        <h3 class="col-sm-3" style="width:50%">Hello, @ViewBag.user.Name!</h3>
         <a class="col-sm-4 pull-right"><h3>Edit personal info</h3></a>
     </div>
     <br />
@@ -37,26 +37,29 @@
                     <div class="form-group row">
                         <label for="telegramName" class="col-sm-2 col-form-label">Telegram</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="telegramName" placeholder="Telegram">
+                            <input type="text" class="form-control" id="telegramName" value="@ViewBag.bound.TelegramAccount" placeholder="Telegram">
                             <small id="telegramHelp" class="form-text text-muted">Telegram username. For example, Ivan Ivanov</small>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Instagram</label>
                         <div class="col-sm-10">
-                            <a href="https://www.instagram.com/accounts/login/" target="_blank">Sign In</a>
+                            <a href="/instagram/login/" target="_blank">Sign In</a>
                             </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Instagram page</label>
+                        <label class="col-sm-2 col-form-label">My feed</label>
                         <div class="col-sm-10">
-                            <a href="https://www.instagram.com/" target="_blank">Your page</a>
+                            <a href="/instagram/myfeed" target="_blank">Your feed</a>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Filters</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" rows="5" id="filters"></textarea>
+                            <textarea class="form-control" rows="5" id="filters">@foreach (var filter in ViewBag.filters)
+{
+   @filter.Filter<text> </text>
+}</textarea>
                             <small id="filtersHelp" class="form-text text-muted">Write topics of interest to you. For example, cats, dogs</small>
                         </div>
                     </div>

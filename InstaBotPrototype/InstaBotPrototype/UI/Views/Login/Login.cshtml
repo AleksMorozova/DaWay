@@ -29,9 +29,10 @@
 
         <div class="login">
             <div class="loginContainer">
-                <form id="loginForm">
+                <form id="loginForm" action="/auth" method="post">
                     <p>Login to the Instagram-Telegram bot</p>
                     <br />
+                    @ViewBag.message
                     <br />
                     <div>
                         <label for="login">Login</label>
