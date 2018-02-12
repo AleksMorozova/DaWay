@@ -10,7 +10,12 @@ namespace InstaBotPrototype.Services
 {
     public class UserManager : IUserManager
     {
-        UserRepository userRepository = new UserRepository();
+        private IUserRepository userRepository;
+
+        public UserManager(IUserRepository repository)
+        {
+            userRepository = repository;
+        }
         AuthorizationModel authModel;
 
         public bool IsLoggedIn(string login, string password)
