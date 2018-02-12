@@ -8,5 +8,6 @@ namespace InstaBotPrototype.Services
     public interface IUserManager
     {
         bool IsLoggedIn(string login, string password);
+        int SessionId(string login);
     }
 }
