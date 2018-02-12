@@ -19,7 +19,7 @@ namespace InstaBotPrototype.Services
 
             if (authModel == null)
             {
-                return false; ;
+                return false;
             }
             else
             {
