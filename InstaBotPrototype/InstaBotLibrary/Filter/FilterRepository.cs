@@ -1,10 +1,8 @@
 ﻿using Dapper;
-using InstaBotLibrary.Filter;
 using InstaBotLibrary.DbCommunication;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
@@ -12,8 +10,7 @@ namespace InstaBotLibrary.Filter
 {
     public class FilterRepository : Repository, IFilterRepository
     {
-        public FilterRepository() { }
-        public FilterRepository(string str) : base(str) { }
+        public FilterRepository(IDbConnectionFactory factory):base(factory) { }
 
 
 

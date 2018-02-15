@@ -3,7 +3,6 @@ using InstaBotLibrary.DbCommunication;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
@@ -11,9 +10,7 @@ namespace InstaBotLibrary.Bound
 {
     public class BoundRepository : Repository, IBoundRepository
     {
-        public BoundRepository() { }
-        public BoundRepository(string str) : base(str) { }
-
+        public BoundRepository(IDbConnectionFactory factory) :base(factory){ }
 
 
         public void AddBound(BoundModel bound)
