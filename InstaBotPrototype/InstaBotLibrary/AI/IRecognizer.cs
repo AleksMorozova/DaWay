@@ -7,6 +7,6 @@ namespace InstaBotLibrary.AI
 {
     interface IRecognizer
     {
-        string RecognizeTopic(byte[] imageBytes);
+        Task<IEnumerable<string>> GetTagsAsync(string imageUri);
     }
 }
