@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace InstaBotLibrary.AI
 {
-    interface IRecognizer
+    public interface IRecognizer
     {
         Task<IEnumerable<string>> GetTagsAsync(string imageUri);
         Task<IEnumerable<string>> GetTagsAsync(Stream imageStream);

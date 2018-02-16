@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using InstaSharp;
 using InstaBotLibrary.Instagram;
+using InstaBotLibrary.AI;
 
 namespace InstaBotPrototype
 {
@@ -26,6 +27,8 @@ namespace InstaBotPrototype
         {
             // Add framework services.
             services.Configure<InstagramConfig>(Configuration.GetSection("InstagramSettings"));
+            services.Configure<MicrosoftVisionOptions>(Configuration.GetSection("MicrosoftVisionApi"));
+            services.AddTransient<IRecognizer, MicrosoftImageRecognizer>();
             services.AddTransient<IInstagramService, InstagramService>();
             services
             .AddMvc()
