@@ -10,30 +10,18 @@ namespace InstaBotLibrary.DbCommunication
 {
     public abstract class Repository
     {
-        string connectionString;
+        //string connectionString;
+        private IDbConnectionFactory factory;
+
+        public Repository(IDbConnectionFactory connectionFactory)
+        {
+            factory = connectionFactory;
+        }
 
         protected IDbConnection GetConnection()
         {
-            return new SqlConnection(connectionString);
+            return factory.GetConnection();
+            //return new SqlConnection(connectionString);
         }
-
-        public Repository()
-        {
-            connectionString = new ConfigurationBuilder()
-               .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-               .AddJsonFile("appsettings.json")
-               .Build()
-               .GetConnectionString("connectionString");
-        }
-
-
-
-        public Repository(string connectionString)
-        {
-            this.connectionString = connectionString;
-        }
-
-
-       
     }
 }

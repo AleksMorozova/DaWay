@@ -1,5 +1,4 @@
-﻿using InstaBotLibrary.Filter;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
