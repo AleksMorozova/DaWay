@@ -1,5 +1,4 @@
-﻿using InstaBotLibrary.User;
-using InstaBotLibrary.Authorization;
+﻿using InstaBotLibrary.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Text;

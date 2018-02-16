@@ -1,19 +1,16 @@
 ﻿using Dapper;
-using InstaBotLibrary.User;
 using InstaBotLibrary.DbCommunication;
 using InstaBotLibrary.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 namespace InstaBotLibrary.User
 {
     public class UserRepository : Repository, IUserRepository
     {
-        public UserRepository() { }
-        public UserRepository(string str) : base(str) { }
+        public UserRepository(IDbConnectionFactory factory) : base(factory) { }
 
 
         public void AddUser(UserModel user)

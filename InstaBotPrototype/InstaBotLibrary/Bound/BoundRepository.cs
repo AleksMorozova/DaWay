@@ -3,7 +3,6 @@ using InstaBotLibrary.DbCommunication;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
@@ -11,16 +10,14 @@ namespace InstaBotLibrary.Bound
 {
     public class BoundRepository : Repository, IBoundRepository
     {
-        public BoundRepository() { }
-        public BoundRepository(string str) : base(str) { }
-
+        public BoundRepository(IDbConnectionFactory factory) :base(factory){ }
 
 
         public void AddBound(BoundModel bound)
         {
             using (IDbConnection db = GetConnection())
             {
-                var sqlQuery = "INSERT INTO Bounds (UserId, TelegramAccount, InstagramToken) VALUES(@UserId, @TelegramAccount, @InstagramToken); SELECT CAST(SCOPE_IDENTITY() as int)";
+                var sqlQuery = "INSERT INTO Bounds (UserId, TelegramAccount, InstagramToken, InstagramId, InstagramUsername) VALUES(@UserId, @TelegramAccount, @InstagramToken, @InstagramId, @InstagramUsername); SELECT CAST(SCOPE_IDENTITY() as int)";
                 int boundId = db.Query<int>(sqlQuery, bound).FirstOrDefault();
                 bound.Id = boundId;
             }
@@ -34,6 +31,14 @@ namespace InstaBotLibrary.Bound
             }
         }
 
+        public void SetInstagramInfo(BoundModel bound)
+        {
+            using (IDbConnection db = GetConnection())
+            {
+                var sqlQuery = "UPDATE Bounds SET InstagramToken = @InstagramToken, InstagramId = @InstagramId, InstagramUsername = @InstagramUsername WHERE Id = @Id";
+                db.Execute(sqlQuery, bound);
+            }
+        }
 
         public void DeleteBound(int boundId)
         {
@@ -59,7 +64,7 @@ namespace InstaBotLibrary.Bound
         {
             using (IDbConnection db = GetConnection())
             {
-                var sqlQuery = "UPDATE Bounds SET TelegramAccount = @TelegramAccount, InstagramToken = @InstagramToken WHERE Id = @Id";
+                var sqlQuery = "UPDATE Bounds SET TelegramAccount = @TelegramAccount, InstagramToken = @InstagramToken, InstagramId = @InstagramId, InstagramUsername = @InstagramUsername WHERE Id = @Id";
                 db.Execute(sqlQuery, bound);
             }
         }
