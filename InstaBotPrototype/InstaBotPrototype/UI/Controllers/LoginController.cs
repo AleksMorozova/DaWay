@@ -51,8 +51,5 @@ namespace InstaBotPrototype.UI.Controllers
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
-        
-
->>>>>>> 6ab5b77... Change LoginController
     }
 }
