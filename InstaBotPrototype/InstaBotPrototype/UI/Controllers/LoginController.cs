@@ -7,12 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstaBotPrototype.UI.Controllers
 {
-    [Route("/")]
+    [Route("login/[action]")]
     public class LoginController : Controller
     {
         // GET: Login
+        [Route("/login")]
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult Login(int? errortype)
         {
             ViewBag.message = TempData["message"];
             return View();
