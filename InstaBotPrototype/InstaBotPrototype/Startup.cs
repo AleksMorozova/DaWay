@@ -9,6 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using InstaSharp;
 using InstaBotLibrary.Instagram;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using InstaBotPrototype.Services;
+using InstaBotLibrary.User;
 
 namespace InstaBotPrototype
 {
@@ -32,7 +35,6 @@ namespace InstaBotPrototype
             .AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander()));
 
             services.AddDistributedMemoryCache();
-            services.AddSession();
             
              services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options => 

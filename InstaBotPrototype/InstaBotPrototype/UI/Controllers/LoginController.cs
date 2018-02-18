@@ -4,6 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using InstaBotPrototype.Services;
 
 namespace InstaBotPrototype.UI.Controllers
 {
@@ -32,7 +36,7 @@ namespace InstaBotPrototype.UI.Controllers
         {
             if (ModelState.IsValid && userManager.IsLoggedIn(login, password))
             {
-                HttpContext.Session.SetInt32("user_id", userManager.SessionId(login));
+                //HttpContext.Session.SetInt32("user_id", userManager.SessionId(login));
                 await Authenticate(login);
                 return RedirectPermanent("/home");
             }
