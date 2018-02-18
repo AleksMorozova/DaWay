@@ -33,8 +33,6 @@ namespace InstaBotPrototype
             services
             .AddMvc()
             .AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander()));
-
-            services.AddDistributedMemoryCache();
             
              services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options => 

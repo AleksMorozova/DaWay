@@ -32,11 +32,11 @@ namespace InstaBotPrototype.Services
             }
         }
 
-       /* public int SessionId (string login)
+        public int SessionId (string login)
         {
             authModel = userRepository.getUserAuthorizationInfo(login);
 
             return authModel.Id;
-        }*/
+        }
     }
 }
