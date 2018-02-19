@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using InstaBotLibrary.Posts;
 
 namespace InstaBotLibrary.Instagram
 {
     public interface IInstagramService
     {
-        Task<IEnumerable<string>> GetLatestPosts();
+        Task<IEnumerable<Post>> GetLatestPosts();
         void Auth(OAuthResponse oauth);
         void Auth(string token, int Id);
         string getLoginLink();
