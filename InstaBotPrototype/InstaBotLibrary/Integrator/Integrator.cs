@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using InstaBotLibrary.Instagram;
 using InstaBotLibrary.Telegram;
 using Hangfire;
-using InstaBotLibrary.Posts;
 
 namespace InstaBotLibrary.Integrator
 {

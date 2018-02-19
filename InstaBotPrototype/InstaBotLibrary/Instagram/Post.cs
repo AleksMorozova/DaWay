@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace InstaBotLibrary.Posts
+namespace InstaBotLibrary.Instagram
 {
     public class Post
     {
