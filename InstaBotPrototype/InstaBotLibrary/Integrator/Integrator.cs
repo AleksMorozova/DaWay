@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Timers;
 using InstaBotLibrary.Instagram;
 using InstaBotLibrary.Telegram;
+using Hangfire;
 
 namespace InstaBotLibrary.Integrator
 {
@@ -34,10 +34,7 @@ namespace InstaBotLibrary.Integrator
 
         public void Start()
         {
-            int munutesInterval = 1;
-            Timer timer = new Timer(60000 * munutesInterval);
-            timer.AutoReset = true;
-            timer.Elapsed += (a, b) => Update();
+            RecurringJob.AddOrUpdate(() => Update(), Cron.Minutely);
         }
 
     }
