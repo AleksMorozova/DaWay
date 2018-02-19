@@ -6,7 +6,6 @@ using InstaSharp;
 using InstaSharp.Models.Responses;
 using InstaSharp.Models;
 using Microsoft.Extensions.Options;
-using InstaBotLibrary.Posts;
 
 namespace InstaBotLibrary.Instagram
 {
