@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using InstaBotLibrary.Instagram;
 using InstaBotLibrary.Telegram;
 using Hangfire;
+using InstaBotLibrary.Posts;
 
 namespace InstaBotLibrary.Integrator
 {
@@ -19,9 +20,9 @@ namespace InstaBotLibrary.Integrator
 
 
 
-        public void Update()
+        public async void Update()
         {
-            IEnumerable<string> posts = instagramService.GetLatestPosts();
+            IEnumerable<Post> posts = await instagramService.GetLatestPosts();
             foreach (var post in posts)
             {
                 //if (posts.containsFilters)
