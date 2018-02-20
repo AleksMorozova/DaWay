@@ -12,6 +12,7 @@ using InstaBotLibrary.Instagram;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using InstaBotPrototype.Services;
 using InstaBotLibrary.User;
+using InstaBotLibrary.AI;
 
 namespace InstaBotPrototype
 {
@@ -29,6 +30,8 @@ namespace InstaBotPrototype
         {
             // Add framework services.
             services.Configure<InstagramConfig>(Configuration.GetSection("InstagramSettings"));
+            services.Configure<MicrosoftVisionOptions>(Configuration.GetSection("MicrosoftVisionApi"));
+            services.AddTransient<IRecognizer, MicrosoftImageRecognizer>();
             services.AddTransient<IInstagramService, InstagramService>();
             services
             .AddMvc()
