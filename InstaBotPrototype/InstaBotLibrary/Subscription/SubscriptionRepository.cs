@@ -9,8 +9,7 @@ namespace InstaBotLibrary.Subscription
 {
     public class SubscriptionRepository : Repository, ISubscriptionRepository
     {
-        public SubscriptionRepository() { }
-        public SubscriptionRepository(string str) : base(str) { }
+        public SubscriptionRepository(IDbConnectionFactory factory) : base(factory) { }
 
 
         public void AddSubscription(SubscriptionModel subscription)
