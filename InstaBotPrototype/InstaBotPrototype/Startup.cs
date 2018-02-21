@@ -9,6 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using InstaSharp;
 using InstaBotLibrary.Instagram;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using InstaBotPrototype.Services;
+using InstaBotLibrary.User;
 using InstaBotLibrary.AI;
 
 namespace InstaBotPrototype
@@ -33,6 +36,15 @@ namespace InstaBotPrototype
             services
             .AddMvc()
             .AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander()));
+            
+             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options => 
+            {
+                options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/login");
+            });
+
+            services.AddTransient<IUserManager, UserManager>();
+            services.AddTransient<IUserRepository, UserRepository>();
         }
 
        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +57,7 @@ namespace InstaBotPrototype
 
             app.UseStaticFiles();
             app.UseMvc();
+            app.UseAuthentication();
         }
     }
 }
