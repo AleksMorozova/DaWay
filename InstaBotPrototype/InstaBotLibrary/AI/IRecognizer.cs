@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace InstaBotLibrary.AI
 {
-    interface IRecognizer
+    public interface IRecognizer
     {
-        string RecognizeTopic(byte[] imageBytes);
+        Task<IEnumerable<string>> GetTagsAsync(string imageUri);
+        Task<IEnumerable<string>> GetTagsAsync(Stream imageStream);
     }
 }
