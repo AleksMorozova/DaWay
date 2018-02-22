@@ -14,7 +14,7 @@ namespace InstaBotPrototype
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).CheckConnection().Run();
+            BuildWebHost(args).CheckConnection().StartIntegrator().Run();
         }
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)

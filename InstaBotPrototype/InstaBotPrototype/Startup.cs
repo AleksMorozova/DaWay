@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Hangfire;
 using InstaSharp;
 using InstaBotLibrary.Instagram;
 using InstaBotLibrary.AI;
+using InstaBotLibrary.Integrator;
+using InstaBotLibrary.Telegram;
 
 namespace InstaBotPrototype
 {
@@ -30,6 +33,11 @@ namespace InstaBotPrototype
             services.Configure<MicrosoftVisionOptions>(Configuration.GetSection("MicrosoftVisionApi"));
             services.AddTransient<IRecognizer, MicrosoftImageRecognizer>();
             services.AddTransient<IInstagramService, InstagramService>();
+            services.AddTransient<IIntegrator, Integrator>();
+            services.AddTransient<ITelegramService, Telegr>();
+            services.AddHangfire(configuration => configuration.UseSqlServerStorage(Configuration.GetConnectionString("connectionString")));
+
+
             services
             .AddMvc()
             .AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander()));
@@ -42,7 +50,8 @@ namespace InstaBotPrototype
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseHangfireDashboard("/hangfire");
+            app.UseHangfireServer();
             app.UseStaticFiles();
             app.UseMvc();
         }
