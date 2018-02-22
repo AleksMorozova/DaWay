@@ -12,7 +12,9 @@ using InstaSharp;
 using InstaBotLibrary.Instagram;
 using InstaBotLibrary.AI;
 using InstaBotLibrary.Integrator;
-using InstaBotLibrary.Telegram;
+using InstaBotLibrary.Bound;
+using InstaBotLibrary.DbCommunication;
+using InstaBotLibrary.Filter;
 
 namespace InstaBotPrototype
 {
@@ -31,7 +33,10 @@ namespace InstaBotPrototype
             // Add framework services.
             services.Configure<InstagramConfig>(Configuration.GetSection("InstagramSettings"));
             services.Configure<MicrosoftVisionOptions>(Configuration.GetSection("MicrosoftVisionApi"));
+            services.Configure<DbConnectionOptions>(Configuration.GetSection("ConnectionStrings"));
             services.AddTransient<IRecognizer, MicrosoftImageRecognizer>();
+            services.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
+            services.AddTransient<IBoundRepository, BoundRepository>();
             services.AddTransient<IInstagramService, InstagramService>();
             services.AddTransient<IIntegrator, Integrator>();
             services.AddHangfire(configuration => configuration.UseSqlServerStorage(Configuration.GetConnectionString("connectionString")));

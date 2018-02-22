@@ -4,20 +4,32 @@ using System.Collections.Generic;
 using InstaBotLibrary.Instagram;
 using InstaBotLibrary.Telegram;
 using Hangfire;
+using InstaBotLibrary.Bound;
 
 namespace InstaBotLibrary.Integrator
 {
     public class Integrator : IIntegrator
     {
         private IInstagramService instagramService;
-
-        public event BotNotification SendMessage;
+        private int boundId;
 
         public Integrator(IInstagramService instagram)
         {
             instagramService = instagram;
         }
 
+
+
+
+
+        public event BotNotification SendMessage;
+
+        
+        public void Auth(BoundModel model)
+        {
+            boundId = model.Id;
+            instagramService.Auth(model.InstagramToken, model.InstagramId);
+        }
 
 
         [AutomaticRetry(Attempts = 0)]
@@ -30,6 +42,7 @@ namespace InstaBotLibrary.Integrator
                 //{
                 //    telegramService.SendMessage(post);
                 //}
+                
             }
 
         }

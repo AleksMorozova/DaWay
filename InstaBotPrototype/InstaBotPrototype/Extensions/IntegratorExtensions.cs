@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using InstaBotLibrary.Integrator;
+using InstaBotLibrary.Bound;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,9 +16,19 @@ namespace InstaBotPrototype.Extensions
             using (IServiceScope scope = webHost.Services.CreateScope())
             {
                 IServiceProvider services = scope.ServiceProvider;
-
-                IIntegrator integrator = services.GetRequiredService<IIntegrator>();
-                integrator.Start();
+                IBoundRepository repository = services.GetRequiredService<IBoundRepository>();
+                List<BoundModel> models = repository.getAllBouns();
+                foreach (BoundModel model in models)
+                {
+                    if (model.InstagramToken != null)
+                    {
+                        IIntegrator integrator = services.GetRequiredService<IIntegrator>();
+                        integrator.Auth(model);
+                        //TODO: Add telegram subsciption
+                        integrator.Start();
+                    }
+                }
+                
             }
             return webHost;
         }

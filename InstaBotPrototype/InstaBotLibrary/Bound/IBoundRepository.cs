@@ -12,5 +12,6 @@ namespace InstaBotLibrary.Bound
         void SetInstagramInfo(BoundModel bound);
         void UpdateBound(BoundModel bound);
         void DeleteBound(int boundId);
+        List<BoundModel> getAllBouns();
     }
 }
