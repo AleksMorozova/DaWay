@@ -34,7 +34,6 @@ namespace InstaBotPrototype
             services.AddTransient<IRecognizer, MicrosoftImageRecognizer>();
             services.AddTransient<IInstagramService, InstagramService>();
             services.AddTransient<IIntegrator, Integrator>();
-            services.AddTransient<ITelegramService, Telegr>();
             services.AddHangfire(configuration => configuration.UseSqlServerStorage(Configuration.GetConnectionString("connectionString")));
 
 

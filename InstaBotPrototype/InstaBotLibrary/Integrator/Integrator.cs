@@ -7,26 +7,15 @@ using Hangfire;
 
 namespace InstaBotLibrary.Integrator
 {
-    public class Telegr : ITelegramService
-    {
-        public int Connect(string username)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string SendMessage(string message)
-        {
-            throw new NotImplementedException();
-        }
-    }
     public class Integrator : IIntegrator
     {
         private IInstagramService instagramService;
-        private ITelegramService telegramService;
-        public Integrator(IInstagramService instagram, ITelegramService telegram)
+
+        public event BotNotification SendMessage;
+
+        public Integrator(IInstagramService instagram)
         {
             instagramService = instagram;
-            telegramService = telegram;
         }
 
 
