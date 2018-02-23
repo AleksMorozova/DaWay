@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using InstaBotLibrary.Instagram;
 using System.Threading.Tasks;
+using InstaBotLibrary.TelegramBot;
 
 namespace InstaBotPrototype.Instagram
 {
@@ -16,7 +17,7 @@ namespace InstaBotPrototype.Instagram
         }
 
 
-        public RedirectResult Login()
+        public RedirectResult Login(string token)
         {
             string link = instagramService.getLoginLink();
 

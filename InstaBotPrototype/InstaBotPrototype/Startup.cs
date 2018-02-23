@@ -13,6 +13,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using InstaBotPrototype.Services;
 using InstaBotLibrary.User;
 using InstaBotLibrary.AI;
+using InstaBotLibrary.Bound;
+using InstaBotLibrary.Filter;
+using InstaBotLibrary.DbCommunication;
 
 namespace InstaBotPrototype
 {
@@ -33,6 +36,11 @@ namespace InstaBotPrototype
             services.Configure<MicrosoftVisionOptions>(Configuration.GetSection("MicrosoftVisionApi"));
             services.AddTransient<IRecognizer, MicrosoftImageRecognizer>();
             services.AddTransient<IInstagramService, InstagramService>();
+            services.Configure<DbConnectionOptions>(Configuration.GetSection("ConnectionStrings"));
+            services.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
+            services.AddTransient<IFilterRepository, FilterRepository>();
+            services.AddTransient<IBoundRepository, BoundRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
             services
             .AddMvc()
             .AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander()));

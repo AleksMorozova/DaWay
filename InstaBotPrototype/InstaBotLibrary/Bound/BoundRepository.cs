@@ -17,11 +17,32 @@ namespace InstaBotLibrary.Bound
         {
             using (IDbConnection db = GetConnection())
             {
-                var sqlQuery = "INSERT INTO Bounds (UserId, TelegramAccount, InstagramToken, InstagramId, InstagramUsername) VALUES(@UserId, @TelegramAccount, @InstagramToken, @InstagramId, @InstagramUsername); SELECT CAST(SCOPE_IDENTITY() as int)";
+                var sqlQuery = "INSERT INTO Bounds (UserId, TelegramAccount, TelegramChatId, TelegramToken, InstagramToken, InstagramId, InstagramUsername) VALUES(@UserId, @TelegramAccount, @TelegramChatId, @TelegramToken, @InstagramToken, @InstagramId, @InstagramUsername); SELECT CAST(SCOPE_IDENTITY() as int)";
                 int boundId = db.Query<int>(sqlQuery, bound).FirstOrDefault();
                 bound.Id = boundId;
             }
         }
+
+        public BoundModel GetBoundInfo(int boundId)
+        {
+            BoundModel bound = null;
+            using (IDbConnection db = GetConnection())
+            {
+                bound = db.Query<BoundModel>("SELECT * FROM Bounds WHERE Id = @boundId", new { boundId }).FirstOrDefault();
+            }
+            return bound;
+        }
+
+        public BoundModel GetBoundByTelegramChatId(long chatId)
+        {
+            BoundModel bound = null;
+            using (IDbConnection db = GetConnection())
+            {
+                bound = db.Query<BoundModel>("SELECT * FROM Bounds WHERE TelegramChatId = @chatId", new { chatId }).FirstOrDefault();
+            }
+            return bound;
+        }
+
         public void SetInstagramToken(BoundModel bound)
         {
             using (IDbConnection db = GetConnection())
@@ -64,7 +85,7 @@ namespace InstaBotLibrary.Bound
         {
             using (IDbConnection db = GetConnection())
             {
-                var sqlQuery = "UPDATE Bounds SET TelegramAccount = @TelegramAccount, InstagramToken = @InstagramToken, InstagramId = @InstagramId, InstagramUsername = @InstagramUsername WHERE Id = @Id";
+                var sqlQuery = "UPDATE Bounds SET TelegramAccount = @TelegramAccount, TelegramChatId = @TelegramChatId, TelegramToken = @TelegramToken, InstagramToken = @InstagramToken, InstagramId = @InstagramId, InstagramUsername = @InstagramUsername WHERE Id = @Id";
                 db.Execute(sqlQuery, bound);
             }
         }
