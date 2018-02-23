@@ -47,7 +47,7 @@ namespace InstaBotLibrary.Filter
             int count = 0;
             using (IDbConnection db = GetConnection())
             {
-                count = db.Query<FilterModel>("SELECT * FROM Filters WHERE Filter = @Filter AND BoundId = @boundId", new { filter }).ToList().Count();
+                count = db.Query<FilterModel>("SELECT 1 FROM Filters WHERE Filter = @Filter AND BoundId = @boundId", new { filter });
             }
             return count;
         }
