@@ -16,15 +16,18 @@ namespace InstaBotPrototype.Instagram
         }
 
 
-        public RedirectResult Login()
+        public RedirectResult Login(string token)
         {
-            string link = instagramService.getLoginLink();
+            string link;
+            if (token != null)
+                link = instagramService.getLoginLink("temp_token", token);
+            else link = instagramService.getLoginLink();
 
             return Redirect(link);
         }
 
         //Getting the access_token
-        public async Task<ActionResult> OAuth(string code)
+        public async Task<ActionResult> OAuth(string temp_token, string code)
         {
             string token = await instagramService.GetToken(code);
 

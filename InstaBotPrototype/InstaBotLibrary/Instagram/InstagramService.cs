@@ -34,14 +34,25 @@ namespace InstaBotLibrary.Instagram
             Auth(new OAuthResponse() { AccessToken = token, User = new UserInfo() { Id = Id } });
         }
 
-        public string getLoginLink()
+        private List<OAuth.Scope> getScopes()
         {
             var scopes = new List<OAuth.Scope>();
             scopes.Add(OAuth.Scope.Basic);
             scopes.Add(OAuth.Scope.Public_Content);
             scopes.Add(OAuth.Scope.Follower_List);
+            return scopes;
+        }
+        public string getLoginLink()
+        {
+            var scopes = getScopes();
 
             string link = OAuth.AuthLink(instagramConfig.OAuthUri + "authorize", instagramConfig.ClientId, instagramConfig.RedirectUri, scopes, OAuth.ResponseType.Code);
+            return link;
+        }
+        public string getLoginLink(string paramName, string paramValue)
+        {
+            var scopes = getScopes();
+            string link = OAuth.AuthLink(instagramConfig.OAuthUri + "authorize", instagramConfig.ClientId, instagramConfig.RedirectUri + "/?" + paramName + "=" + paramValue, scopes, OAuth.ResponseType.Code);
             return link;
         }
 
