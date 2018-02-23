@@ -41,5 +41,15 @@ namespace InstaBotLibrary.Filter
             }
             return filters;
         }
+
+        public int findFilter(FilterModel filter)
+        {
+            int count = 0;
+            using (IDbConnection db = GetConnection())
+            {
+                count = db.Query<FilterModel>("SELECT * FROM Filters WHERE Filter = @Filter AND BoundId = @boundId", new { filter }).ToList().Count();
+            }
+            return count;
+        }
     }
 }

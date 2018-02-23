@@ -22,7 +22,7 @@ namespace InstaBotLibrary.TelegramBot
 
         public TelegramBot(IUserRepository userRepository, IBoundRepository boundRepository, IFilterRepository filterRepository)
         {
-            bot = new TelegramBotClient("497309209:AAEyVmjRBhT0HC7Z5cEJuMWPJMlVE41Vtyo");
+            bot = new TelegramBotClient("Api-key");
             this.userRepository = userRepository;
             this.boundRepository = boundRepository;
             this.filterRepository = filterRepository;
@@ -80,8 +80,7 @@ namespace InstaBotLibrary.TelegramBot
                     FilterModel filter = new FilterModel();
                     filter.BoundId = boundId;
                     filter.Filter = filterToAdd;
-                    var filters = filterRepository.getBoundFilters(boundId);
-                    if (filters.Count(f => f == filter) > 0)
+                    if (filterRepository.findFilter(filter) > 0)
                     {
                         (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, "Такой фильтр уже есть!");
                     }
@@ -98,8 +97,7 @@ namespace InstaBotLibrary.TelegramBot
                     FilterModel filter = new FilterModel();
                     filter.BoundId = boundId;
                     filter.Filter = filterToDelete;
-                    var filters = filterRepository.getBoundFilters(boundId);
-                    if (filters.Count(f => f == filter) == 0)
+                    if (filterRepository.findFilter(filter) == 0)
                     {
                         (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, "Такого фильтра нету!");
                     }
