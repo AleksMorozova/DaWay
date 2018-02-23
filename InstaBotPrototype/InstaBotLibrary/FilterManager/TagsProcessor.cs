@@ -26,7 +26,7 @@ namespace InstaBotLibrary.FilterManager
 
             List<string> imageInfoList = new List<string>(imageInfo);
 
-            List<string> postTags = post.text.Split('#').ToList();
+            List<string> postTags = post.tags;
 
             List<FilterModel> boundFilters = filterRepository.getBoundFilters(boundId);
 
