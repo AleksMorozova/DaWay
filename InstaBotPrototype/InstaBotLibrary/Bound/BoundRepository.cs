@@ -10,7 +10,7 @@ namespace InstaBotLibrary.Bound
 {
     public class BoundRepository : Repository, IBoundRepository
     {
-        public BoundRepository(IDbConnectionFactory factory) :base(factory){ }
+        public BoundRepository(IDbConnectionFactory factory) : base(factory) { }
 
 
         public void AddBound(BoundModel bound)
@@ -38,6 +38,16 @@ namespace InstaBotLibrary.Bound
                 var sqlQuery = "UPDATE Bounds SET InstagramToken = @InstagramToken, InstagramId = @InstagramId, InstagramUsername = @InstagramUsername WHERE Id = @Id";
                 db.Execute(sqlQuery, bound);
             }
+        }
+
+        public BoundModel GetBoundByTempToken(string token)
+        {
+            BoundModel bound = null;
+            using (IDbConnection db = GetConnection())
+            {
+                bound = db.Query<BoundModel>("SELECT * FROM Bounds WHERE TelegramToken = @token", new { token }).FirstOrDefault();
+            }
+            return bound;
         }
 
         public void DeleteBound(int boundId)

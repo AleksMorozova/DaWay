@@ -10,6 +10,7 @@ namespace InstaBotLibrary.Bound
         void AddBound(BoundModel bound);
         void SetInstagramToken(BoundModel bound);
         void SetInstagramInfo(BoundModel bound);
+        BoundModel GetBoundByTempToken(string token);
         void UpdateBound(BoundModel bound);
         void DeleteBound(int boundId);
     }

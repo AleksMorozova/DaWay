@@ -63,7 +63,13 @@ namespace InstaBotLibrary.Instagram
             var oauthResponse = await auth.RequestToken(code);
             return oauthResponse.AccessToken;
         }
+        public async Task<OAuthResponse> GetResponse(string code)
+        {
+            var auth = new OAuth(instagramConfig);
 
+            var oauthResponse = await auth.RequestToken(code);
+            return oauthResponse;
+        }
 
         public async Task<MediasResponse> GetMedias()
         {
