@@ -69,7 +69,7 @@ namespace InstaBotLibrary.Bound
             }
         }
 
-        public List<BoundModel> getAllBouns()
+        public List<BoundModel> getAllBounds()
         {
             List<BoundModel> bounds = null;
             using (IDbConnection db = GetConnection())

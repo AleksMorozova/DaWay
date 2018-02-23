@@ -17,7 +17,7 @@ namespace InstaBotPrototype.Extensions
             {
                 IServiceProvider services = scope.ServiceProvider;
                 IBoundRepository repository = services.GetRequiredService<IBoundRepository>();
-                List<BoundModel> models = repository.getAllBouns();
+                List<BoundModel> models = repository.getAllBounds();
                 foreach (BoundModel model in models)
                 {
                     if (model.InstagramToken != null)
