@@ -45,6 +45,7 @@ namespace InstaBotPrototype
 
             services.AddTransient<IUserManager, UserManager>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IRecognizer, MicrosoftImageRecognizer>();
         }
 
        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,6 +1,8 @@
-﻿using InstaBotLibrary.Filter;
+﻿using InstaBotLibrary.AI;
+using InstaBotLibrary.Filter;
 using InstaBotLibrary.Instagram;
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,16 +11,40 @@ namespace InstaBotLibrary.FilterManager
 {
     public class TagsProcessor
     {
-        public List<string> TagIntersection(List<FilterModel> filters, Post post)
-        {
-            List<string> inputFilters = new List<string>();
+        private IRecognizer imageRecognizer;
+        private IFilterRepository filterRepository;
 
-            for (int i = 0; i < filters.Count; i++)
+        public TagsProcessor(IRecognizer _imageRecognizer, IFilterRepository _filterRepository)
+        {
+            imageRecognizer = _imageRecognizer;
+            filterRepository = _filterRepository;
+        }
+
+        public async Task<bool> TagIntersectionAsync(Post post, int boundId)
+        {
+            IEnumerable<string> imageInfo = await imageRecognizer.GetTagsAsync(post.imageUrl);
+
+            List<string> imageInfoList = new List<string>(imageInfo);
+
+            List<string> postTags = post.text.Split('#').ToList();
+
+            List<FilterModel> boundFilters = filterRepository.getBoundFilters(boundId);
+
+            List<string> userFilters = new List<string>();
+
+            foreach (var filter in boundFilters)
             {
-                inputFilters.Add(filters[i].Filter);
+                userFilters.Add(filter.Filter);
             }
 
-            return post.tags.Intersect(inputFilters).ToList();
+            if (userFilters.Intersect(postTags).Any() || userFilters.Intersect(imageInfoList).Any())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
