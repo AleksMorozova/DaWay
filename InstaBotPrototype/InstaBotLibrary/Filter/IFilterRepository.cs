@@ -9,6 +9,6 @@ namespace InstaBotLibrary.Filter
         List<FilterModel> getBoundFilters(int boundId);
         void AddFilter(FilterModel filter);
         void DeleteFilter(FilterModel filter);
-        int findFilter(FilterModel filter);
+        bool findFilter(FilterModel filter);
     }
 }

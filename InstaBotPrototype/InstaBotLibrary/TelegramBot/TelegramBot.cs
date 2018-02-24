@@ -80,7 +80,7 @@ namespace InstaBotLibrary.TelegramBot
                     FilterModel filter = new FilterModel();
                     filter.BoundId = boundId;
                     filter.Filter = filterToAdd;
-                    if (filterRepository.findFilter(filter) > 0)
+                    if (filterRepository.findFilter(filter))
                     {
                         (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, "Такой фильтр уже есть!");
                     }
@@ -97,7 +97,7 @@ namespace InstaBotLibrary.TelegramBot
                     FilterModel filter = new FilterModel();
                     filter.BoundId = boundId;
                     filter.Filter = filterToDelete;
-                    if (filterRepository.findFilter(filter) == 0)
+                    if (!filterRepository.findFilter(filter))
                     {
                         (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, "Такого фильтра нету!");
                     }
