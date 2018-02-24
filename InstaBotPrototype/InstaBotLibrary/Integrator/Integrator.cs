@@ -45,7 +45,6 @@ namespace InstaBotLibrary.Integrator
                     SendPost?.Invoke(boundId, post);
                 }
             }
-
         }
 
         public void Start()
