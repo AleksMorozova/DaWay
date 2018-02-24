@@ -42,14 +42,14 @@ namespace InstaBotLibrary.Filter
             return filters;
         }
 
-        public bool findFilter(FilterModel filter)
+        public bool CheckFilter(FilterModel filter)
         {
-            bool count = false;
+            bool exists = false;
             using (IDbConnection db = GetConnection())
             {
-                count = db.Query<FilterModel>("SELECT 1 FROM Filters WHERE Filter = @Filter AND BoundId = @boundId", new { filter }).Any();
+                exists = db.Query<FilterModel>("SELECT 1 FROM Filters WHERE Filter = @Filter AND BoundId = @BoundId", filter).Any();
             }
-            return count;
+            return exists;
         }
     }
 }
