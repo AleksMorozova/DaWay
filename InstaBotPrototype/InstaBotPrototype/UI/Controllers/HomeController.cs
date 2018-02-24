@@ -16,9 +16,21 @@ namespace InstaBotPrototype.UI.Controllers
         [HttpGet]
         public IActionResult Home()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+                return View();
+            else
+                return Redirect("/login");
         }
-        
+
+        [Route("/")]
+        public RedirectResult Index()
+        {
+            if (User.Identity.IsAuthenticated)
+                return Redirect("/home");
+            else
+                return Redirect("/login");
+        }
+
         [Route("/exit")]
         public async Task<IActionResult> Logout()
         {

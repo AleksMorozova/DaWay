@@ -41,5 +41,15 @@ namespace InstaBotLibrary.Filter
             }
             return filters;
         }
+
+        public bool CheckFilter(FilterModel filter)
+        {
+            bool exists = false;
+            using (IDbConnection db = GetConnection())
+            {
+                exists = db.Query<FilterModel>("SELECT 1 FROM Filters WHERE Filter = @Filter AND BoundId = @BoundId", filter).Any();
+            }
+            return exists;
+        }
     }
 }

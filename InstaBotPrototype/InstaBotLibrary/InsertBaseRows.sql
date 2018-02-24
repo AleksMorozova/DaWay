@@ -1,4 +1,4 @@
-﻿INSERT INTO Users (Login, Password, Name, Surname, Birth)
+INSERT INTO Users (Login, Password, Name, Surname, Birth)
 VALUES ('user1','user1password','UserName','UserSurname', '1997-11-16');
 
 INSERT INTO Bounds (UserId, TelegramAccount, InstagramToken)

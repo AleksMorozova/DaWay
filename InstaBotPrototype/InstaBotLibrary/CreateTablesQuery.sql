@@ -10,8 +10,10 @@
 CREATE TABLE Bounds
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
-	[UserId] INT NOT NULL,
+	[UserId] INT,
 	[TelegramAccount] NVARCHAR(80),
+	[TelegramChatId] INT,
+	[TelegramToken] NVARCHAR(80),
 	[InstagramToken] NVARCHAR(80),
 	[InstagramId] INT,
 	[InstagramUsername] NVARCHAR(80),

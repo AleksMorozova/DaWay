@@ -9,6 +9,7 @@ namespace InstaBotLibrary.Integrator
     public interface IIntegrator
     {
         void Start();
+        event BotNotification SendPost;
         void Auth(BoundModel boundModel);
         Task Update();
     }
