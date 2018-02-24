@@ -17,6 +17,7 @@ using InstaBotLibrary.AI;
 using InstaBotLibrary.Integrator;
 using InstaBotLibrary.Bound;
 using InstaBotLibrary.DbCommunication;
+using InstaBotLibrary.FilterManager;
 using InstaBotLibrary.Filter;
 
 namespace InstaBotPrototype
@@ -38,6 +39,7 @@ namespace InstaBotPrototype
             services.Configure<MicrosoftVisionOptions>(Configuration.GetSection("MicrosoftVisionApi"));
             services.Configure<DbConnectionOptions>(Configuration.GetSection("ConnectionStrings"));
             services.AddTransient<IRecognizer, MicrosoftImageRecognizer>();
+            services.AddTransient<TagsProcessor>();
             services.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
             services.AddTransient<IBoundRepository, BoundRepository>();
             services.AddTransient<IInstagramService, InstagramService>();

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using InstaBotLibrary.Instagram;
-using InstaBotLibrary.Telegram;
+using InstaBotLibrary.FilterManager;
 using Hangfire;
 using InstaBotLibrary.Bound;
 
@@ -11,18 +11,20 @@ namespace InstaBotLibrary.Integrator
     public class Integrator : IIntegrator
     {
         private IInstagramService instagramService;
+        private TagsProcessor tagsProcessor;
         private int boundId;
 
-        public Integrator(IInstagramService instagram)
+        public Integrator(IInstagramService instagram, TagsProcessor processor)
         {
             instagramService = instagram;
+            tagsProcessor = processor;
         }
 
 
 
 
 
-        public event BotNotification SendMessage;
+        public event BotNotification SendPost;
 
         
         public void Auth(BoundModel model)
@@ -38,11 +40,10 @@ namespace InstaBotLibrary.Integrator
             IEnumerable<Post> posts = await instagramService.GetLatestPosts();
             foreach (var post in posts)
             {
-                //if (posts.containsFilters)
-                //{
-                //    telegramService.SendMessage(post);
-                //}
-                
+                if (await tagsProcessor.TagIntersectionAsync(post, boundId))
+                {
+                    SendPost?.Invoke(boundId, post);
+                }
             }
 
         }
