@@ -7,15 +7,20 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Hangfire;
 using InstaSharp;
 using InstaBotLibrary.Instagram;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using InstaBotPrototype.Services;
 using InstaBotLibrary.User;
 using InstaBotLibrary.AI;
+using InstaBotLibrary.Tokens;
+using InstaBotLibrary.Integrator;
 using InstaBotLibrary.Bound;
-using InstaBotLibrary.Filter;
 using InstaBotLibrary.DbCommunication;
+using InstaBotLibrary.FilterManager;
+using InstaBotLibrary.Filter;
+
 
 namespace InstaBotPrototype
 {
@@ -34,13 +39,20 @@ namespace InstaBotPrototype
             // Add framework services.
             services.Configure<InstagramConfig>(Configuration.GetSection("InstagramSettings"));
             services.Configure<MicrosoftVisionOptions>(Configuration.GetSection("MicrosoftVisionApi"));
-            services.AddTransient<IRecognizer, MicrosoftImageRecognizer>();
-            services.AddTransient<IInstagramService, InstagramService>();
             services.Configure<DbConnectionOptions>(Configuration.GetSection("ConnectionStrings"));
+            services.AddTransient<IRecognizer, MicrosoftImageRecognizer>();
+            services.AddTransient<TagsProcessor>();
             services.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
-            services.AddTransient<IFilterRepository, FilterRepository>();
             services.AddTransient<IBoundRepository, BoundRepository>();
+            services.AddTransient<IInstagramService, InstagramService>();
+            services.AddTransient<IFilterRepository, FilterRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ITokenGenerator, TokenGenerator>();
+            services.AddTransient<IIntegrator, Integrator>();
+            services.AddHangfire(configuration => configuration.UseSqlServerStorage(Configuration.GetConnectionString("connectionString")));
+
+
+			
             services
             .AddMvc()
             .AddRazorOptions(options => options.ViewLocationExpanders.Add(new ViewLocationExpander()));
@@ -53,6 +65,7 @@ namespace InstaBotPrototype
 
             services.AddTransient<IUserManager, UserManager>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IRecognizer, MicrosoftImageRecognizer>();
         }
 
        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,7 +75,8 @@ namespace InstaBotPrototype
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseHangfireDashboard("/hangfire");
+            app.UseHangfireServer();
             app.UseStaticFiles();
             app.UseMvc();
             app.UseAuthentication();

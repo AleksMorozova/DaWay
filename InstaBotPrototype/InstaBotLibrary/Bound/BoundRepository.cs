@@ -10,7 +10,7 @@ namespace InstaBotLibrary.Bound
 {
     public class BoundRepository : Repository, IBoundRepository
     {
-        public BoundRepository(IDbConnectionFactory factory) :base(factory){ }
+        public BoundRepository(IDbConnectionFactory factory) : base(factory) { }
 
 
         public void AddBound(BoundModel bound)
@@ -61,6 +61,16 @@ namespace InstaBotLibrary.Bound
             }
         }
 
+        public BoundModel GetBoundByTempToken(string token)
+        {
+            BoundModel bound = null;
+            using (IDbConnection db = GetConnection())
+            {
+                bound = db.Query<BoundModel>("SELECT * FROM Bounds WHERE TelegramToken = @token", new { token }).FirstOrDefault();
+            }
+            return bound;
+        }
+
         public void DeleteBound(int boundId)
         {
             using (IDbConnection db = GetConnection())
@@ -90,5 +100,14 @@ namespace InstaBotLibrary.Bound
             }
         }
 
+        public List<BoundModel> getAllBounds()
+        {
+            List<BoundModel> bounds = null;
+            using (IDbConnection db = GetConnection())
+            {
+                bounds = db.Query<BoundModel>("SELECT * FROM Bounds").ToList();
+            }
+            return bounds;
+        }
     }
 }

@@ -12,7 +12,9 @@ namespace InstaBotLibrary.Bound
         BoundModel GetBoundByTelegramChatId(long chatId);
         void SetInstagramToken(BoundModel bound);
         void SetInstagramInfo(BoundModel bound);
+        BoundModel GetBoundByTempToken(string token);
         void UpdateBound(BoundModel bound);
         void DeleteBound(int boundId);
+        List<BoundModel> getAllBounds();
     }
 }
