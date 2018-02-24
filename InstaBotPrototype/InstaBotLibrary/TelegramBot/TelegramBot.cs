@@ -8,6 +8,7 @@ using InstaBotLibrary.Bound;
 using InstaBotLibrary.Filter;
 using InstaBotLibrary.Instagram;
 using Microsoft.Extensions.Options;
+using InstaBotLibrary.Tokens;
 
 namespace InstaBotLibrary.TelegramBot
 {
@@ -17,12 +18,14 @@ namespace InstaBotLibrary.TelegramBot
         //https://web. telegram.org/#/im?p=@DaWay_bot
         private IBoundRepository boundRepository;
         private IFilterRepository filterRepository;
+        private ITokenGenerator tokenGenerator;
 
-        public TelegramBot(IOptions<TelegramBotOptions> options, IUserRepository userRepository, IBoundRepository boundRepository, IFilterRepository filterRepository)
+        public TelegramBot(IOptions<TelegramBotOptions> options, IUserRepository userRepository, IBoundRepository boundRepository, IFilterRepository filterRepository, ITokenGenerator generator)
         {
             bot = new TelegramBotClient(options.Value.Token);
             this.boundRepository = boundRepository;
             this.filterRepository = filterRepository;
+            tokenGenerator = generator;
             bot.OnMessage += Bot_OnMessage;
         }
         
@@ -65,7 +68,7 @@ namespace InstaBotLibrary.TelegramBot
                     BoundModel bound = new BoundModel();
                     bound.TelegramAccount = e.Message.From.Username;
                     bound.TelegramChatId = e.Message.Chat.Id;
-                    bound.TelegramToken = "12345";
+                    bound.TelegramToken = tokenGenerator.GenerateToken(40);
                     boundRepository.AddBound(bound);
                     (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, "http://localhost:58688/Instagram/Login?token="+bound.TelegramToken);
 
