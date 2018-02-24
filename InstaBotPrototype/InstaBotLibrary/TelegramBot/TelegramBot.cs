@@ -7,8 +7,7 @@ using InstaBotLibrary.User;
 using InstaBotLibrary.Bound;
 using InstaBotLibrary.Filter;
 using InstaBotLibrary.Instagram;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Extensions.Options;
 
 namespace InstaBotLibrary.TelegramBot
 {
@@ -16,14 +15,12 @@ namespace InstaBotLibrary.TelegramBot
     {
         private TelegramBotClient bot;
         //https://web. telegram.org/#/im?p=@DaWay_bot
-        private IUserRepository userRepository;
         private IBoundRepository boundRepository;
         private IFilterRepository filterRepository;
 
-        public TelegramBot(IUserRepository userRepository, IBoundRepository boundRepository, IFilterRepository filterRepository)
+        public TelegramBot(IOptions<TelegramBotOptions> options, IUserRepository userRepository, IBoundRepository boundRepository, IFilterRepository filterRepository)
         {
-            bot = new TelegramBotClient("Api-key");
-            this.userRepository = userRepository;
+            bot = new TelegramBotClient(options.Value.Token);
             this.boundRepository = boundRepository;
             this.filterRepository = filterRepository;
             bot.OnMessage += Bot_OnMessage;
