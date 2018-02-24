@@ -13,5 +13,6 @@ namespace InstaBotLibrary.Bound
         BoundModel GetBoundByTempToken(string token);
         void UpdateBound(BoundModel bound);
         void DeleteBound(int boundId);
+        List<BoundModel> getAllBounds();
     }
 }

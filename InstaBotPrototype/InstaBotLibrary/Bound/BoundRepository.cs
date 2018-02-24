@@ -79,5 +79,14 @@ namespace InstaBotLibrary.Bound
             }
         }
 
+        public List<BoundModel> getAllBounds()
+        {
+            List<BoundModel> bounds = null;
+            using (IDbConnection db = GetConnection())
+            {
+                bounds = db.Query<BoundModel>("SELECT * FROM Bounds").ToList();
+            }
+            return bounds;
+        }
     }
 }
