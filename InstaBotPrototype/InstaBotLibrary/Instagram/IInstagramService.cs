@@ -11,6 +11,8 @@ namespace InstaBotLibrary.Instagram
         void Auth(OAuthResponse oauth);
         void Auth(string token, int Id);
         string getLoginLink();
+        string getLoginLink(string paramName, string paramValue);
+        Task<OAuthResponse> GetResponse(string code);
         Task<string> GetToken(string code);
         Task<MediasResponse> GetMedias();
         Task<UserResponse> GerUserInfo();
