@@ -20,31 +20,24 @@ namespace InstaBotLibrary.FilterManager
             filterRepository = _filterRepository;
         }
 
+        public bool Intersects(IEnumerable<string> tags, IEnumerable<string> filters)
+        {
+            return tags.Intersect(filters).Any();
+        }
+
         public async Task<bool> TagIntersectionAsync(Post post, int boundId)
         {
-            IEnumerable<string> imageInfo = await imageRecognizer.GetTagsAsync(post.imageUrl);
-
-            List<string> imageInfoList = new List<string>(imageInfo);
-
-            List<string> postTags = post.tags;
-
             List<FilterModel> boundFilters = filterRepository.getBoundFilters(boundId);
 
-            List<string> userFilters = new List<string>();
+            List<string> filters = boundFilters.ConvertAll(model => model.Filter);
 
-            foreach (var filter in boundFilters)
-            {
-                userFilters.Add(filter.Filter);
-            }
-
-            if (userFilters.Intersect(postTags).Any() || userFilters.Intersect(imageInfoList).Any())
-            {
+            if (Intersects(post.tags, filters) && Intersects(post.text.Split(' '), filters))
                 return true;
-            }
-            else
-            {
-                return false;
-            }
+
+
+            IEnumerable<string> imageInfo = await imageRecognizer.GetTagsAsync(post.imageUrl);
+
+            return Intersects(imageInfo, filters);
         }
     }
 }
