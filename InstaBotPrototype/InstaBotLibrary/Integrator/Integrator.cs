@@ -30,7 +30,7 @@ namespace InstaBotLibrary.Integrator
         public void Auth(BoundModel model)
         {
             boundId = model.Id;
-            instagramService.Auth(model.InstagramToken, model.InstagramId);
+            instagramService.Auth(model.InstagramToken, model.InstagramId.Value);
         }
 
 

@@ -41,13 +41,13 @@ namespace InstaBotLibrary.TelegramBot
 
         public void SendMessage(int boundId, string message)
         {
-            long chatId = boundRepository.GetBoundInfo(boundId).TelegramChatId;
+            long chatId = boundRepository.GetBoundInfo(boundId).TelegramChatId.Value;
             bot.SendTextMessageAsync(chatId, message);
         }
 
         public void SendPost(int boundId, Post post)
         {
-            long chatId = boundRepository.GetBoundInfo(boundId).TelegramChatId;
+            long chatId = boundRepository.GetBoundInfo(boundId).TelegramChatId.Value;
             bot.SendTextMessageAsync(chatId, post.text);
             bot.SendTextMessageAsync(chatId, post.imageUrl);
             string tags = "";
