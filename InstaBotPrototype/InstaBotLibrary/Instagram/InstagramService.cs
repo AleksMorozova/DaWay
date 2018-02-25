@@ -6,16 +6,20 @@ using InstaSharp;
 using InstaSharp.Models.Responses;
 using InstaSharp.Models;
 using Microsoft.Extensions.Options;
+using InstaBotLibrary.Bound;
 
 namespace InstaBotLibrary.Instagram
 {
     public class InstagramService : IInstagramService
     {
         private InstagramConfig instagramConfig;
+        private IBoundRepository boundRepository;
         private OAuthResponse auth = null;
+        private Dictionary<long, string> lastPosts = new Dictionary<long, string>();
 
-        public InstagramService(IOptions<InstagramConfig> config)
+        public InstagramService(IOptions<InstagramConfig> config, IBoundRepository boundRepository)
         {
+            this.boundRepository = boundRepository;
             instagramConfig = config.Value;
         }
 
@@ -72,13 +76,33 @@ namespace InstaBotLibrary.Instagram
             return oauthResponse;
         }
 
-        public async Task<MediasResponse> GetMedias()
+        private async Task<List<InstaSharp.Models.Media>> GetMedias()
         {
             AssertIsAuthenticated();
             var users = new Users(instagramConfig, auth);
             MediasResponse feed = await users.RecentSelf();
-            return feed;
+            List<InstaSharp.Models.Media> medias = new List<InstaSharp.Models.Media>();
+            if (feed.Data.Count == 0) return medias;
+            if (!lastPosts.ContainsKey(auth.User.Id))
+            {
+                lastPosts.Add(auth.User.Id, feed.Data[0].Id);
+                return feed.Data;
+            }
+            else
+            {
+                string lastId = feed.Data[0].Id;
+                foreach (var post in feed.Data)
+                {
+                    if (lastPosts[auth.User.Id] == post.Id)
+                        break;
+                    medias.Add(post);
+                }
+                lastPosts[auth.User.Id] = lastId;
+            }
+            return medias;
         }
+
+
         public async Task<UserResponse> GerUserInfo()
         {
             AssertIsAuthenticated();
@@ -112,10 +136,27 @@ namespace InstaBotLibrary.Instagram
             foreach (var user in subscriptions)
             {
                 var feed = await users.Recent(user.Id);
-                medias.AddRange(feed.Data);
+                if (feed.Data.Count == 0) return medias;
+                if (!lastPosts.ContainsKey(user.Id))
+                {
+                    lastPosts.Add(user.Id, feed.Data[0].Id);
+                    medias.AddRange(feed.Data);
+                }
+                else
+                {
+                    string lastId = feed.Data[0].Id;
+                    foreach (var post in feed.Data)
+                    {
+                        if (lastPosts[user.Id] == post.Id)
+                            break;
+                        medias.Add(post);
+                    }
+                    lastPosts[user.Id] = lastId;
+                }
             }
             return medias;
         }
+
 
         public async Task<List<InstaSharp.Models.Media>> GetFollowsMedia(IEnumerable<long> subscriptions)
         {
@@ -132,9 +173,18 @@ namespace InstaBotLibrary.Instagram
 
         public async Task<IEnumerable<Post>> GetLatestPosts()
         {
-            List<InstaSharp.Models.Media> lst = await GetFollowsMedia();
-            lst.AddRange((await GetMedias()).Data);
-            return Array.ConvertAll(lst.ToArray(), post => new Post(post.Caption.Text, post.Images.StandardResolution.Url, post.Tags));
+            List<InstaSharp.Models.Media> lst = new List<InstaSharp.Models.Media>();
+            lst.AddRange((await GetMedias()));
+            lst.AddRange(await GetFollowsMedia());
+            return Array.ConvertAll(lst.ToArray(), post => new Post(post.Caption?.Text, post.Images?.StandardResolution?.Url, post.Tags));
+        }
+        public async Task<IEnumerable<Post>> GetLatestPosts(int BoundId)
+        {
+            var bound = boundRepository.GetBoundInfo(BoundId);
+
+            bound.InstagramToken = bound.InstagramToken;
+            Auth(bound.InstagramToken, bound.InstagramId.Value);
+            return await GetLatestPosts();
         }
     }
 }

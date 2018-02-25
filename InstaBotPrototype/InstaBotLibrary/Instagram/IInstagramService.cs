@@ -8,13 +8,13 @@ namespace InstaBotLibrary.Instagram
     public interface IInstagramService
     {
         Task<IEnumerable<Post>> GetLatestPosts();
+        Task<IEnumerable<Post>> GetLatestPosts(int boundId);
         void Auth(OAuthResponse oauth);
         void Auth(string token, long Id);
         string getLoginLink();
         string getLoginLink(string paramName, string paramValue);
         Task<OAuthResponse> GetResponse(string token, string code);
         Task<string> GetToken(string code);
-        Task<MediasResponse> GetMedias();
         Task<UserResponse> GerUserInfo();
         Task<List<InstaSharp.Models.User>> GetFollowsList();
         Task<List<InstaSharp.Models.Media>> GetFollowsMedia();

@@ -26,9 +26,18 @@ namespace InstaBotLibrary.AI
 
         public async Task<IEnumerable<string>> GetTagsAsync(string imageUri)
         {
-            VisionServiceClient visionServiceClient = new VisionServiceClient(options.apiKey, options.apiRoot);
-            var analysisResult = await visionServiceClient.DescribeAsync(imageUri);
-            return analysisResult.Description.Tags;
+            try
+            {
+                VisionServiceClient visionServiceClient = new VisionServiceClient(options.apiKey, options.apiRoot);
+                var analysisResult = await visionServiceClient.DescribeAsync(imageUri);
+                return analysisResult.Description.Tags;
+            }
+            
+            catch (ClientException e)
+            {
+                return null;
+            }
+            
         }
 
     }

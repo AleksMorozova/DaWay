@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Collections.Generic;
 using InstaBotLibrary.Instagram;
 using InstaBotLibrary.FilterManager;
@@ -37,7 +38,7 @@ namespace InstaBotLibrary.Integrator
         [AutomaticRetry(Attempts = 0)]
         public async Task Update()
         {
-            IEnumerable<Post> posts = await instagramService.GetLatestPosts();
+            IEnumerable<Post> posts = await instagramService.GetLatestPosts(boundId);
             foreach (var post in posts)
             {
                 if (await tagsProcessor.TagIntersectionAsync(post, boundId))
@@ -47,10 +48,19 @@ namespace InstaBotLibrary.Integrator
             }
         }
 
+
         public void Start()
         {
-            RecurringJob.AddOrUpdate(() => Update(), Cron.Minutely);
+            //Timer timer = new Timer(60000);
+            //timer.Elapsed += Timer_Elapsed;
+            //timer.Start();
+            //Update();
+            RecurringJob.AddOrUpdate(() => Update(), Cron.MinuteInterval(1));
         }
 
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Update();
+        }
     }
 }

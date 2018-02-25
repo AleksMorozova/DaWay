@@ -48,18 +48,9 @@ namespace InstaBotLibrary.TelegramBot
         public void SendPost(int boundId, Post post)
         {
             long chatId = boundRepository.GetBoundInfo(boundId).TelegramChatId.Value;
-            bot.SendTextMessageAsync(chatId, post.text);
 
-            bot.SendTextMessageAsync(chatId, post.imageUrl);
-            bot.SendPhotoAsync(chatId, post.imageUrl);
 
-            string tags = "";
-            foreach (var t in post.tags)
-            {
-                tags += t;
-                tags += " ";
-            }
-            bot.SendTextMessageAsync(chatId, tags);
+            bot.SendPhotoAsync(chatId, post.imageUrl, post.text ?? "");
         }
 
 
@@ -116,7 +107,6 @@ namespace InstaBotLibrary.TelegramBot
             }
             else if (e.Message.Text == "all")
             {
-                string filterToDelete = e.Message.Text.Split(' ')[1];
                 int boundId = boundRepository.GetBoundByTelegramChatId(e.Message.Chat.Id).Id;
                 var filters = filterRepository.getBoundFilters(boundId);
                 foreach (var f in filters)
