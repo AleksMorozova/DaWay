@@ -49,7 +49,9 @@ namespace InstaBotLibrary.TelegramBot
         {
             long chatId = boundRepository.GetBoundInfo(boundId).TelegramChatId.Value;
             bot.SendTextMessageAsync(chatId, post.text);
+            
             bot.SendTextMessageAsync(chatId, post.imageUrl);
+            bot.SendPhotoAsync(chatId, post.imageUrl);
             string tags = "";
             foreach (var t in post.tags)
             {
@@ -70,7 +72,7 @@ namespace InstaBotLibrary.TelegramBot
                     bound.TelegramChatId = e.Message.Chat.Id;
                     bound.TelegramToken = tokenGenerator.GenerateToken(40);
                     boundRepository.AddBound(bound);
-                    (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, "http://localhost:58688/Instagram/Login?token="+bound.TelegramToken);
+                    (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, "http://localhost:58687/Instagram/Login?token="+bound.TelegramToken);
 
                 }
                 else if (e.Message.Text.Split(' ')[0] == "add") 

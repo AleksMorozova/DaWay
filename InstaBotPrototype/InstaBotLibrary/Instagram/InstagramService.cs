@@ -16,13 +16,7 @@ namespace InstaBotLibrary.Instagram
 
         public InstagramService(IOptions<InstagramConfig> config)
         {
-            //instagramConfig = config.Value;
-            var clientId = config.Value.ClientId;
-            var clientSecret = config.Value.ClientSecret;
-            var redirectUri = config.Value.RedirectUri;
-            var realtimeUri = "";
-
-            instagramConfig = new InstagramConfig(clientId, clientSecret, redirectUri, realtimeUri);
+            instagramConfig = config.Value;
         }
 
         private void AssertIsAuthenticated()
@@ -58,7 +52,7 @@ namespace InstaBotLibrary.Instagram
         public string getLoginLink(string paramName, string paramValue)
         {
             var scopes = getScopes();
-            string link = OAuth.AuthLink(instagramConfig.OAuthUri + "authorize", instagramConfig.ClientId, instagramConfig.RedirectUri + "/?" + paramName + "=" + paramValue, scopes, OAuth.ResponseType.Code);
+            string link = OAuth.AuthLink(instagramConfig.OAuthUri + "authorize", instagramConfig.ClientId, instagramConfig.RedirectUri + "?" + paramName + "=" + paramValue, scopes, OAuth.ResponseType.Code);
             return link;
         }
 
@@ -69,10 +63,11 @@ namespace InstaBotLibrary.Instagram
             var oauthResponse = await auth.RequestToken(code);
             return oauthResponse.AccessToken;
         }
-        public async Task<OAuthResponse> GetResponse(string code)
+        public async Task<OAuthResponse> GetResponse(string token, string code)
         {
-            var auth = new OAuth(instagramConfig);
-
+            var config = instagramConfig.GetCopy();
+            config.RedirectUri = instagramConfig.RedirectUri + "?" + "temp_token" + "=" + token;
+            var auth = new OAuth(config);
             var oauthResponse = await auth.RequestToken(code);
             return oauthResponse;
         }
