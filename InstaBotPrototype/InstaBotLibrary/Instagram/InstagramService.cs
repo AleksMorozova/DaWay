@@ -16,7 +16,13 @@ namespace InstaBotLibrary.Instagram
 
         public InstagramService(IOptions<InstagramConfig> config)
         {
-            instagramConfig = config.Value;
+            //instagramConfig = config.Value;
+            var clientId = config.Value.ClientId;
+            var clientSecret = config.Value.ClientSecret;
+            var redirectUri = config.Value.RedirectUri;
+            var realtimeUri = "";
+
+            instagramConfig = new InstagramConfig(clientId, clientSecret, redirectUri, realtimeUri);
         }
 
         private void AssertIsAuthenticated()
