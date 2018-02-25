@@ -132,6 +132,7 @@ namespace InstaBotLibrary.Instagram
         public async Task<IEnumerable<Post>> GetLatestPosts()
         {
             List<InstaSharp.Models.Media> lst = await GetFollowsMedia();
+            lst.AddRange((await GetMedias()).Data);
             return Array.ConvertAll(lst.ToArray(), post => new Post(post.Caption.Text, post.Images.StandardResolution.Url, post.Tags));
         }
     }
