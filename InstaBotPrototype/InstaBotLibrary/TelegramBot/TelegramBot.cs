@@ -109,9 +109,18 @@ namespace InstaBotLibrary.TelegramBot
             {
                 int boundId = boundRepository.GetBoundByTelegramChatId(e.Message.Chat.Id).Id;
                 var filters = filterRepository.getBoundFilters(boundId);
-                foreach (var f in filters)
+                if (filters.Count == 0)
+                    (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, "У Вас нет фильтров.");
+                else
                 {
-                    (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, f.Filter);
+                    string msg = "Ваши фильтры: ";
+                    foreach (var f in filters)
+                    {
+                        msg += f.Filter + ", ";
+                    }
+                    msg = msg.Remove(msg.Length - 2);
+                    msg += ".";
+                    (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, msg);
                 }
             }
             else

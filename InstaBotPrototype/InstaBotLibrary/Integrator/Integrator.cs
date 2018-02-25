@@ -54,7 +54,7 @@ namespace InstaBotLibrary.Integrator
             Timer timer = new Timer(30000);
             timer.Elapsed += Timer_Elapsed;
             timer.Start();
-            Update();
+            //Update();
             //RecurringJob.AddOrUpdate(() => Update(), Cron.MinuteInterval(1));
         }
 
