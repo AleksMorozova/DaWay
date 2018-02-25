@@ -13,7 +13,7 @@ namespace InstaBotLibrary.Bound
         public long? TelegramChatId {get; set;}
         public string TelegramToken {get; set;}
         public string InstagramUsername { get; set; }
-        public int? InstagramId { get; set; }
+        public long? InstagramId { get; set; }
         public string InstagramToken { get; set; }
     }
 }

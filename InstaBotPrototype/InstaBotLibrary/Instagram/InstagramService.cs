@@ -29,7 +29,7 @@ namespace InstaBotLibrary.Instagram
         {
             auth = oauth;
         }
-        public void Auth(string token, int Id)
+        public void Auth(string token, long Id)
         {
             Auth(new OAuthResponse() { AccessToken = token, User = new UserInfo() { Id = Id } });
         }

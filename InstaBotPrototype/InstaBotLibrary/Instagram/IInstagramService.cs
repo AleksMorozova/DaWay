@@ -9,7 +9,7 @@ namespace InstaBotLibrary.Instagram
     {
         Task<IEnumerable<Post>> GetLatestPosts();
         void Auth(OAuthResponse oauth);
-        void Auth(string token, int Id);
+        void Auth(string token, long Id);
         string getLoginLink();
         string getLoginLink(string paramName, string paramValue);
         Task<OAuthResponse> GetResponse(string token, string code);

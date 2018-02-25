@@ -42,7 +42,7 @@ namespace InstaBotPrototype.Instagram
             {
                 BoundModel bound = boundRepository.GetBoundByTempToken(temp_token);
                 bound.InstagramToken = response.AccessToken;
-                bound.InstagramId = (int)response.User.Id;
+                bound.InstagramId = response.User.Id;
                 boundRepository.UpdateBound(bound);
             }
 
