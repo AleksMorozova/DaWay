@@ -78,8 +78,8 @@ namespace InstaBotPrototype
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseHangfireDashboard("/hangfire");
-            app.UseHangfireServer();
+            //app.UseHangfireDashboard("/hangfire");
+            //app.UseHangfireServer();
             app.UseStaticFiles();
             app.UseMvc();
             app.UseAuthentication();

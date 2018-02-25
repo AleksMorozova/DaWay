@@ -33,7 +33,7 @@ namespace InstaBotLibrary.FilterManager
 
             List<string> filters = boundFilters.ConvertAll(model => model.Filter);
 
-            if (Intersects(post.tags, filters) && Intersects(post.text.Split(' '), filters))
+            if (Intersects(post.tags, filters) || Intersects(post.text.Split(' '), filters))
                 return true;
 
             if (post.imageUrl == null) return false;

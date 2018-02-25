@@ -51,11 +51,11 @@ namespace InstaBotLibrary.Integrator
 
         public void Start()
         {
-            //Timer timer = new Timer(60000);
-            //timer.Elapsed += Timer_Elapsed;
-            //timer.Start();
-            //Update();
-            RecurringJob.AddOrUpdate(() => Update(), Cron.MinuteInterval(1));
+            Timer timer = new Timer(30000);
+            timer.Elapsed += Timer_Elapsed;
+            timer.Start();
+            Update();
+            //RecurringJob.AddOrUpdate(() => Update(), Cron.MinuteInterval(1));
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
