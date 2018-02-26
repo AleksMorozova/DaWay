@@ -23,12 +23,9 @@ namespace InstaBotLibrary.AI
             return analysisResult.Description.Tags;
         }
 
-        public async Task<IEnumerable<string>> GetTagsAsync(string imageUri)
-        {
-            return await GetTagsAsync(imageUri, true);
-        }
 
-        private async Task<IEnumerable<string>> GetTagsAsync(string imageUri, bool retry)
+
+        public async Task<IEnumerable<string>> GetTagsAsync(string imageUri)
         {
             try
             {
@@ -39,15 +36,7 @@ namespace InstaBotLibrary.AI
             
             catch (ClientException e)
             {
-                if (retry)
-                {
-                    Thread.Sleep(60000);
-                    return await GetTagsAsync(imageUri, false);
-                }
-                else
-                {
-                    return null;
-                }
+                return null;
             }
             
         }
