@@ -32,18 +32,12 @@ namespace InstaBotLibrary.FilterManager
             List<FilterModel> boundFilters = filterRepository.getBoundFilters(boundId);
 
             List<string> filters = boundFilters.ConvertAll(model => model.Filter);
-
-            if (Intersects(post.tags, filters) || Intersects(post.text.Split(' '), filters))
+            if (Intersects(post.tags, filters) || Intersects(post.text?.Split(' '), filters))
                 return true;
 
             if (post.imageUrl == null) return false;
 
             IEnumerable<string> imageInfo = await imageRecognizer.GetTagsAsync(post.imageUrl);
-            if (imageInfo == null)
-            {
-                Thread.Sleep(60000);
-                imageInfo = await imageRecognizer.GetTagsAsync(post.imageUrl);
-            }
 
             return Intersects(imageInfo, filters);
         }

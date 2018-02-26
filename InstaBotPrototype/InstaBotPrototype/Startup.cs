@@ -36,7 +36,7 @@ namespace InstaBotPrototype
             services.Configure<MicrosoftVisionOptions>(Configuration.GetSection("MicrosoftVisionApi"));
             services.Configure<DbConnectionOptions>(Configuration.GetSection("ConnectionStrings"));
             services.Configure<TelegramBotOptions>(Configuration.GetSection("TelegramBotSettings"));
-            services.AddTransient<IRecognizer, MicrosoftImageRecognizer>();
+            services.AddSingleton<IRecognizer, MicrosoftImageRecognizer>();
             services.AddTransient<TagsProcessor>();
             services.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
             services.AddTransient<IBoundRepository, BoundRepository>();

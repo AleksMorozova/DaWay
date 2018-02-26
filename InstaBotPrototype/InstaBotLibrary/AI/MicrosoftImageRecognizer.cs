@@ -1,7 +1,6 @@
-﻿using System;
+﻿using System.Threading;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Microsoft.ProjectOxford.Vision;
@@ -26,6 +25,11 @@ namespace InstaBotLibrary.AI
 
         public async Task<IEnumerable<string>> GetTagsAsync(string imageUri)
         {
+            return await GetTagsAsync(imageUri, true);
+        }
+
+        private async Task<IEnumerable<string>> GetTagsAsync(string imageUri, bool retry)
+        {
             try
             {
                 VisionServiceClient visionServiceClient = new VisionServiceClient(options.apiKey, options.apiRoot);
@@ -35,7 +39,15 @@ namespace InstaBotLibrary.AI
             
             catch (ClientException e)
             {
-                return null;
+                if (retry)
+                {
+                    Thread.Sleep(60000);
+                    return await GetTagsAsync(imageUri, false);
+                }
+                else
+                {
+                    return null;
+                }
             }
             
         }

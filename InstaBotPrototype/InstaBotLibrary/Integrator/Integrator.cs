@@ -34,9 +34,9 @@ namespace InstaBotLibrary.Integrator
         }
 
 
-        public async Task Update()
+        public async void Update()
         {
-            IEnumerable<Post> posts = await instagramService.GetLatestPosts(boundId);
+            IEnumerable<Post> posts = await instagramService.GetLatestPosts();
             foreach (var post in posts)
             {
                 if (await tagsProcessor.TagIntersectionAsync(post, boundId))
@@ -52,6 +52,7 @@ namespace InstaBotLibrary.Integrator
             Timer timer = new Timer(30000);
             timer.Elapsed += Timer_Elapsed;
             timer.Start();
+            Update();
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)

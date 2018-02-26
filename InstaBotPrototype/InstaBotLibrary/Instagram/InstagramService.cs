@@ -176,12 +176,11 @@ namespace InstaBotLibrary.Instagram
             List<InstaSharp.Models.Media> lst = new List<InstaSharp.Models.Media>();
             lst.AddRange((await GetMedias()));
             lst.AddRange(await GetFollowsMedia());
-            return Array.ConvertAll(lst.ToArray(), post => new Post(post.Caption?.Text, post.Images?.StandardResolution?.Url, post.Tags));
+            return lst.ConvertAll(post => new Post(post.Caption?.Text, post.Images?.StandardResolution?.Url, post.Tags));
         }
         public async Task<IEnumerable<Post>> GetLatestPosts(int BoundId)
         {
             var bound = boundRepository.GetBoundInfo(BoundId);
-
             bound.InstagramToken = bound.InstagramToken;
             Auth(bound.InstagramToken, bound.InstagramId.Value);
             return await GetLatestPosts();
