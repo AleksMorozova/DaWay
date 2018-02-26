@@ -136,7 +136,7 @@ namespace InstaBotLibrary.Instagram
             foreach (var user in subscriptions)
             {
                 var feed = await users.Recent(user.Id);
-                if (feed.Data.Count == 0) return medias;
+                if (feed.Data.Count == 0) continue;
                 if (!lastPosts.ContainsKey(user.Id))
                 {
                     lastPosts.Add(user.Id, feed.Data[0].Id);
