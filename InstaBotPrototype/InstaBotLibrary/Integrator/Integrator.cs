@@ -4,7 +4,6 @@ using System.Timers;
 using System.Collections.Generic;
 using InstaBotLibrary.Instagram;
 using InstaBotLibrary.FilterManager;
-using Hangfire;
 using InstaBotLibrary.Bound;
 
 namespace InstaBotLibrary.Integrator
@@ -35,7 +34,6 @@ namespace InstaBotLibrary.Integrator
         }
 
 
-        [AutomaticRetry(Attempts = 0)]
         public async Task Update()
         {
             IEnumerable<Post> posts = await instagramService.GetLatestPosts(boundId);
@@ -54,8 +52,6 @@ namespace InstaBotLibrary.Integrator
             Timer timer = new Timer(30000);
             timer.Elapsed += Timer_Elapsed;
             timer.Start();
-            //Update();
-            //RecurringJob.AddOrUpdate(() => Update(), Cron.MinuteInterval(1));
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
