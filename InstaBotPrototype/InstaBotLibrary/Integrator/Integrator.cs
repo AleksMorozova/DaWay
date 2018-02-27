@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Collections.Generic;
 using InstaBotLibrary.Instagram;
 using InstaBotLibrary.FilterManager;
-using Hangfire;
 using InstaBotLibrary.Bound;
 
 namespace InstaBotLibrary.Integrator
@@ -30,12 +30,11 @@ namespace InstaBotLibrary.Integrator
         public void Auth(BoundModel model)
         {
             boundId = model.Id;
-            instagramService.Auth(model.InstagramToken, model.InstagramId);
+            instagramService.Auth(model.InstagramToken, model.InstagramId.Value);
         }
 
 
-        [AutomaticRetry(Attempts = 0)]
-        public async Task Update()
+        public async void Update()
         {
             IEnumerable<Post> posts = await instagramService.GetLatestPosts();
             foreach (var post in posts)
@@ -47,10 +46,18 @@ namespace InstaBotLibrary.Integrator
             }
         }
 
+
         public void Start()
         {
-            RecurringJob.AddOrUpdate(() => Update(), Cron.Minutely);
+            Timer timer = new Timer(30000);
+            timer.Elapsed += Timer_Elapsed;
+            timer.Start();
+            Update();
         }
 
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Update();
+        }
     }
 }

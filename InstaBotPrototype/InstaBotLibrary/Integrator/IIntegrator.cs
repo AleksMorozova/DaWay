@@ -11,6 +11,6 @@ namespace InstaBotLibrary.Integrator
         void Start();
         event BotNotification SendPost;
         void Auth(BoundModel boundModel);
-        Task Update();
+        void Update();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using InstaBotLibrary.AI;
 using InstaBotLibrary.Filter;
 using InstaBotLibrary.Instagram;
+using System.Threading;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace InstaBotLibrary.FilterManager
 
         public bool Intersects(IEnumerable<string> tags, IEnumerable<string> filters)
         {
+            if (tags == null || filters == null) return false;
             return tags.Intersect(filters).Any();
         }
 
@@ -30,10 +32,10 @@ namespace InstaBotLibrary.FilterManager
             List<FilterModel> boundFilters = filterRepository.getBoundFilters(boundId);
 
             List<string> filters = boundFilters.ConvertAll(model => model.Filter);
-
-            if (Intersects(post.tags, filters) && Intersects(post.text.Split(' '), filters))
+            if (Intersects(post.tags, filters) || Intersects(post.text?.Split(' '), filters))
                 return true;
 
+            if (post.imageUrl == null) return false;
 
             IEnumerable<string> imageInfo = await imageRecognizer.GetTagsAsync(post.imageUrl);
 

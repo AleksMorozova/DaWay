@@ -33,7 +33,7 @@ namespace InstaBotPrototype.Instagram
         //Getting the access_token
         public async Task<ActionResult> OAuth(string temp_token, string code)
         {
-            OAuthResponse response = await instagramService.GetResponse(code);
+            OAuthResponse response = await instagramService.GetResponse(temp_token, code);
             if (temp_token == null)
             {
                 //add token to logged in user
@@ -42,7 +42,7 @@ namespace InstaBotPrototype.Instagram
             {
                 BoundModel bound = boundRepository.GetBoundByTempToken(temp_token);
                 bound.InstagramToken = response.AccessToken;
-                bound.InstagramId = (int)response.User.Id;
+                bound.InstagramId = response.User.Id;
                 boundRepository.UpdateBound(bound);
             }
 

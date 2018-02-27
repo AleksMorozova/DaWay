@@ -22,11 +22,11 @@ namespace InstaBotPrototype.Extensions
                 List<BoundModel> models = repository.getAllBounds();
                 foreach (BoundModel model in models)
                 {
-                    if (model.InstagramToken != null)
+                    if (model.InstagramToken != null && model.TelegramChatId != null)
                     {
                         IIntegrator integrator = services.GetRequiredService<IIntegrator>();
                         integrator.Auth(model);
-                        //TODO: Add telegram subsciption
+                        //Add telegram subsciption
                         integrator.SendPost += telegramService.SendPost;
 
                         integrator.Start();

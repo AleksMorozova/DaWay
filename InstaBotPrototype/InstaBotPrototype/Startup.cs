@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Hangfire;
 using InstaSharp;
 using InstaBotLibrary.Instagram;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -42,7 +36,7 @@ namespace InstaBotPrototype
             services.Configure<MicrosoftVisionOptions>(Configuration.GetSection("MicrosoftVisionApi"));
             services.Configure<DbConnectionOptions>(Configuration.GetSection("ConnectionStrings"));
             services.Configure<TelegramBotOptions>(Configuration.GetSection("TelegramBotSettings"));
-            services.AddTransient<IRecognizer, MicrosoftImageRecognizer>();
+            services.AddSingleton<IRecognizer, MicrosoftImageRecognizer>();
             services.AddTransient<TagsProcessor>();
             services.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
             services.AddTransient<IBoundRepository, BoundRepository>();
@@ -52,7 +46,6 @@ namespace InstaBotPrototype
             services.AddTransient<ITokenGenerator, TokenGenerator>();
             services.AddTransient<IIntegrator, Integrator>();
             services.AddSingleton<ITelegramService, TelegramBot>();
-            services.AddHangfire(configuration => configuration.UseSqlServerStorage(Configuration.GetConnectionString("connectionString")));
 
 
 			
@@ -78,8 +71,6 @@ namespace InstaBotPrototype
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseHangfireDashboard("/hangfire");
-            app.UseHangfireServer();
             app.UseStaticFiles();
             app.UseMvc();
             app.UseAuthentication();

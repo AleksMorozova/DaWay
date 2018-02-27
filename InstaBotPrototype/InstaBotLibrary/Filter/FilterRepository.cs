@@ -27,7 +27,7 @@ namespace InstaBotLibrary.Filter
         {
             using (IDbConnection db = GetConnection())
             {
-                var sqlQuery = "DELETE FROM Users WHERE BoundId = @BoundId AND Filter = @Filter";
+                var sqlQuery = "DELETE FROM Filters WHERE BoundId = @BoundId AND Filter = @Filter";
                 db.Execute(sqlQuery, filter);
             }
         }
