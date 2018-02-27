@@ -76,6 +76,7 @@ namespace InstaBotLibrary.TelegramBot
             }
             else if (e.Message.Text.StartsWith("add"))
             {
+                if (e.Message.Text.Split(' ').Length < 2) return;
                 string filterToAdd = e.Message.Text.Split(' ')[1];
                 int boundId = boundRepository.GetBoundByTelegramChatId(e.Message.Chat.Id).Id;
                 FilterModel filter = new FilterModel();
@@ -93,6 +94,7 @@ namespace InstaBotLibrary.TelegramBot
             }
             else if (e.Message.Text.StartsWith("delete"))
             {
+                if (e.Message.Text.Split(' ').Length < 2) return;
                 string filterToDelete = e.Message.Text.Split(' ')[1];
                 int boundId = boundRepository.GetBoundByTelegramChatId(e.Message.Chat.Id).Id;
                 FilterModel filter = new FilterModel();
