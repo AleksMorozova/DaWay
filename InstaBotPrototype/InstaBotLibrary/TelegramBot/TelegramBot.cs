@@ -107,10 +107,10 @@ namespace InstaBotLibrary.TelegramBot
                     (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, "Фильтр удален!");
                 }
             }
-            else if (e.Message.Text.Split(' ')[0] == "describe")
-            {
-                DescribeAsync(e.Message.Text.Split(' ')[1], sender as TelegramBotClient, e.Message.Chat.Id);
-            }
+            //else if (e.Message.Text.Split(' ')[0] == "describe")
+            //{
+            //    DescribeAsync(e.Message.Text.Split(' ')[1], sender as TelegramBotClient, e.Message.Chat.Id);
+            //}
             else if (e.Message.Text == "all")
             {
                 int boundId = boundRepository.GetBoundByTelegramChatId(e.Message.Chat.Id).Id;
@@ -133,7 +133,7 @@ namespace InstaBotLibrary.TelegramBot
             {
                 (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, "add {filter} - добавить фильтр\n" +
                     "delete {filter} - удалить фильтр\n" +
-                    "describe {imgUrl} - распознать теги на картинке\n" +
+                    //"describe {imgUrl} - распознать теги на картинке\n" +
                     "all - просмотреть фильтры");
             }
 
