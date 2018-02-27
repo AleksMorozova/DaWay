@@ -47,7 +47,8 @@ namespace InstaBotPrototype.Instagram
                 bound.InstagramToken = response.AccessToken;
                 bound.InstagramId = response.User.Id;
                 boundRepository.UpdateBound(bound);
-                integratorFactory.Create(bound);
+                IIntegrator integrator = integratorFactory.Create(bound);
+                integrator.Start();
             }
 
             return Redirect("http://localhost:58687/");

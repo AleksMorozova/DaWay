@@ -28,7 +28,8 @@ namespace InstaBotLibrary.Integrator
 
         public IIntegrator Create(BoundModel model)
         {
-            Integrator integrator = new Integrator(new InstagramService(config, repository), processor);
+            IInstagramService instagram = new InstagramService(config, repository);
+            Integrator integrator = new Integrator(instagram, processor);
             integrator.SendPost += telegram.SendPost;
             integrator.Auth(model);
             return integrator;

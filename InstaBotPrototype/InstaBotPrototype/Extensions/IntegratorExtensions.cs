@@ -19,12 +19,12 @@ namespace InstaBotPrototype.Extensions
                 IServiceProvider services = scope.ServiceProvider;
                 ITelegramService telegramService = services.GetRequiredService<ITelegramService>();
                 IBoundRepository repository = services.GetRequiredService<IBoundRepository>();
-                IIntegratorFactory factory = services.GetRequiredService<IIntegratorFactory>();
                 List<BoundModel> models = repository.getAllBounds();
                 foreach (BoundModel model in models)
                 {
                     if (model.InstagramToken != null && model.TelegramChatId != null)
                     {
+                        IIntegratorFactory factory = services.GetRequiredService<IIntegratorFactory>();
                         IIntegrator integrator = factory.Create(model);
                         integrator.Start();
                     }
