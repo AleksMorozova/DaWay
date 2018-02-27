@@ -37,7 +37,7 @@ namespace InstaBotPrototype
             services.Configure<DbConnectionOptions>(Configuration.GetSection("ConnectionStrings"));
             services.Configure<TelegramBotOptions>(Configuration.GetSection("TelegramBotSettings"));
             services.AddSingleton<IRecognizer, MicrosoftImageRecognizer>();
-            services.AddSingleton<TagsProcessor>();
+            services.AddTransient<TagsProcessor>();
             services.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
             services.AddTransient<IBoundRepository, BoundRepository>();
             services.AddTransient<IInstagramService, InstagramService>();
