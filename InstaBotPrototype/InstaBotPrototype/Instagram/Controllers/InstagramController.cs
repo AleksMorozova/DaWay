@@ -4,6 +4,7 @@ using InstaBotLibrary.Instagram;
 using System.Threading.Tasks;
 using InstaBotLibrary.Bound;
 using InstaSharp.Models.Responses;
+using InstaBotLibrary.Integrator;
 
 namespace InstaBotPrototype.Instagram
 {
@@ -12,11 +13,13 @@ namespace InstaBotPrototype.Instagram
     {
         private IInstagramService instagramService;
         private IBoundRepository boundRepository;
+        IIntegratorFactory integratorFactory;
 
-        public InstagramController(IInstagramService service, IBoundRepository boundRepository)
+        public InstagramController(IInstagramService service, IBoundRepository boundRepository, IIntegratorFactory factory)
         {
             instagramService = service;
             this.boundRepository = boundRepository;
+            integratorFactory = factory;
         }
 
 
@@ -44,6 +47,8 @@ namespace InstaBotPrototype.Instagram
                 bound.InstagramToken = response.AccessToken;
                 bound.InstagramId = response.User.Id;
                 boundRepository.UpdateBound(bound);
+                IIntegrator integrator = integratorFactory.Create(bound);
+                integrator.Start();
             }
 
             return Redirect("http://localhost:58687/");

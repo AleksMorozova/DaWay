@@ -24,11 +24,8 @@ namespace InstaBotPrototype.Extensions
                 {
                     if (model.InstagramToken != null && model.TelegramChatId != null)
                     {
-                        IIntegrator integrator = services.GetRequiredService<IIntegrator>();
-                        integrator.Auth(model);
-                        //Add telegram subsciption
-                        integrator.SendPost += telegramService.SendPost;
-
+                        IIntegratorFactory factory = services.GetRequiredService<IIntegratorFactory>();
+                        IIntegrator integrator = factory.Create(model);
                         integrator.Start();
                     }
                 }

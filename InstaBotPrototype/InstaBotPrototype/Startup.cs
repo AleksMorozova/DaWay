@@ -46,6 +46,7 @@ namespace InstaBotPrototype
             services.AddTransient<ITokenGenerator, TokenGenerator>();
             services.AddTransient<IIntegrator, Integrator>();
             services.AddSingleton<ITelegramService, TelegramBot>();
+            services.AddTransient<IIntegratorFactory, IntegratorFactory>();
 
 
 			
