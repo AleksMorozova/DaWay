@@ -58,6 +58,7 @@ namespace InstaBotLibrary.TelegramBot
 
         private void Bot_OnMessage(object sender, Telegram.Bot.Args.MessageEventArgs e)
         {
+            TelegramBotClient client = sender as TelegramBotClient;
             if (e.Message.Text == "/start")
             {
                 long chatId = e.Message.Chat.Id;
@@ -70,10 +71,10 @@ namespace InstaBotLibrary.TelegramBot
                     bound.TelegramToken = tokenGenerator.GenerateToken(40);
                     boundRepository.AddBound(bound);
                 }
-                (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, "http://localhost:58687/Instagram/Login?token=" + bound.TelegramToken);
+                client.SendTextMessageAsync(e.Message.Chat.Id, "http://localhost:58687/Instagram/Login?token=" + bound.TelegramToken);
 
             }
-            else if (e.Message.Text.Split(' ')[0] == "add")
+            else if (e.Message.Text.StartsWith("add"))
             {
                 string filterToAdd = e.Message.Text.Split(' ')[1];
                 int boundId = boundRepository.GetBoundByTelegramChatId(e.Message.Chat.Id).Id;
@@ -82,15 +83,15 @@ namespace InstaBotLibrary.TelegramBot
                 filter.Filter = filterToAdd;
                 if (filterRepository.CheckFilter(filter))
                 {
-                    (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, "Такой фильтр уже есть!");
+                    client.SendTextMessageAsync(e.Message.Chat.Id, "Такой фильтр уже есть!");
                 }
                 else
                 {
                     filterRepository.AddFilter(filter);
-                    (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, "Фильтр добавлен!");
+                    client.SendTextMessageAsync(e.Message.Chat.Id, "Фильтр добавлен!");
                 }
             }
-            else if (e.Message.Text.Split(' ')[0] == "delete")
+            else if (e.Message.Text.StartsWith("delete"))
             {
                 string filterToDelete = e.Message.Text.Split(' ')[1];
                 int boundId = boundRepository.GetBoundByTelegramChatId(e.Message.Chat.Id).Id;
@@ -99,15 +100,15 @@ namespace InstaBotLibrary.TelegramBot
                 filter.Filter = filterToDelete;
                 if (!filterRepository.CheckFilter(filter))
                 {
-                    (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, "Такого фильтра нету!");
+                    client.SendTextMessageAsync(e.Message.Chat.Id, "Такого фильтра нету!");
                 }
                 else
                 {
                     filterRepository.DeleteFilter(filter);
-                    (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, "Фильтр удален!");
+                    client.SendTextMessageAsync(e.Message.Chat.Id, "Фильтр удален!");
                 }
             }
-            //else if (e.Message.Text.Split(' ')[0] == "describe")
+            //else if (e.Message.Text.StartsWith("describe"))
             //{
             //    DescribeAsync(e.Message.Text.Split(' ')[1], sender as TelegramBotClient, e.Message.Chat.Id);
             //}
@@ -116,7 +117,7 @@ namespace InstaBotLibrary.TelegramBot
                 int boundId = boundRepository.GetBoundByTelegramChatId(e.Message.Chat.Id).Id;
                 var filters = filterRepository.getBoundFilters(boundId);
                 if (filters.Count == 0)
-                    (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, "У Вас нет фильтров.");
+                    client.SendTextMessageAsync(e.Message.Chat.Id, "У Вас нет фильтров.");
                 else
                 {
                     string msg = "Ваши фильтры: ";
@@ -126,12 +127,12 @@ namespace InstaBotLibrary.TelegramBot
                     }
                     msg = msg.Remove(msg.Length - 2);
                     msg += ".";
-                    (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, msg);
+                    client.SendTextMessageAsync(e.Message.Chat.Id, msg);
                 }
             }
             else
             {
-                (sender as TelegramBotClient).SendTextMessageAsync(e.Message.Chat.Id, "add {filter} - добавить фильтр\n" +
+                client.SendTextMessageAsync(e.Message.Chat.Id, "add {filter} - добавить фильтр\n" +
                     "delete {filter} - удалить фильтр\n" +
                     //"describe {imgUrl} - распознать теги на картинке\n" +
                     "all - просмотреть фильтры");
