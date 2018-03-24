@@ -10,13 +10,25 @@
 CREATE TABLE Bounds
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
-	[UserId] INT NOT NULL,
-	[TelegramAccount] NVARCHAR(50) NOT NULL,
-	[InstagramAccount] NVARCHAR(50) NOT NULL,
-	[InstagramPassword] NVARCHAR(50) NOT NULL
+	[UserId] INT,
+	[TelegramAccount] NVARCHAR(80),
+	[TelegramChatId] BIGINT NULL,
+	[TelegramToken] NVARCHAR(80),
+	[InstagramToken] NVARCHAR(80),
+	[InstagramId] BIGINT NULL,
+	[InstagramUsername] NVARCHAR(80),
 );
 CREATE TABLE Filters
 (
+    [Id] INT NOT NULL PRIMARY KEY IDENTITY,
 	[BoundId] INT NOT NULL,
-	[Filter] NVARCHAR(20) NOT NULL PRIMARY KEY
+	[Filter] NVARCHAR(20) NOT NULL
+);
+
+CREATE TABLE Subscribtions
+(
+    [Id] INT NOT NULL PRIMARY KEY IDENTITY,
+	[BoundId] INT NOT NULL,
+	[UserName] NVARCHAR(80) NOT NULL,
+	[UserId] INT NOT NULL
 );

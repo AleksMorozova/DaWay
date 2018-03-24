@@ -1,0 +1,12 @@
+1) To create database:
+click View -> SQL Server Object Explorer
+Then Right click on SQL Setver -> (localdb)\MSSQLLocalDB -> Databases
+and choose "Add new Database"
+Input in "DataBase Name" field "DaWayDatabase".
+Click "Ok".
+
+2) To create Tables in database run "CreateTablesQuery.sql" script.
+To fill tables with some data run "InsertBaseRows".
+
+
+3) When work with application connectionString is in "appsettings.json".

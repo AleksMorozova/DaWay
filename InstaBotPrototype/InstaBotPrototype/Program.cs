@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using InstaBotPrototype.Extensions;
 
 namespace InstaBotPrototype
 {
@@ -13,7 +14,7 @@ namespace InstaBotPrototype
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            BuildWebHost(args).CheckConnection().StartIntegrator().Run();
         }
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
